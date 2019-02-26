@@ -1,0 +1,18 @@
+Candidate Correlations
+In this section, we will examine how similar are the terms that the candidates use. With the pairwise_cor() function from the widyr package, we can compare the words that the candidates
+use, as well as their frequency of use. To do this, we will use the code below to create a correlation
+matrix, comparing each candidate. We’ll also add coefficients of 1 to compare candidates to themselves.
+
+[insert code to create correlation table and graphic]
+
+Once the matrix is built, we can use the corrplot() function to visually represent the correlations.
+
+[insert corrplot() function code]
+
+[graphic]
+
+Our results show that there is a definite group of candidates who highly correlate with each other. To better visualize how related this group is, we will use a network graph with edges colored to represent their levels of correlation. The code and graph are below.
+
+[code for network correlation]
+
+[graphic]

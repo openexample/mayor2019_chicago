@@ -1,0 +1,55 @@
+As you might imagine, candidates often repeat certain words and repeat phrases in order to emphasize various ideas. If they repeat them enough, those words can start to represent a campaign theme the candidate wishes to express to potential voters. In this chapter, we will examine the Twitter messages from each candidate over the campaign period to find and graph co-occurring words. We can, then, ascertain from those connections ideas and themes candidates wish to express.
+
+Here is a (somewhat) quick rundown of the process, including examples of the code used:
+
+First, we will take the dataset of each candidate, filter out retweets, then take the text portion of each record, get rid of extended unicode characters, and embedded url’s. The remaining words will then be paired off in the order in which they occur. The pairs will then be filtered out to remove those that contain “stop words” that are not terms for us and extended unicode characters that aren’t words we can use. 
+
+[candidate_big_filterd code]
+
+Next, the pairs are counted up and a count for each pair is returned
+
+[candidate_big_counts code]
+
+The pairs, along with a count of their co-occurrence, is then filtered, only keeping pairs with co-occurrences of five or more. A graph is then constructed, using nodes to represent each word and lines (edges) to represent the number of co-occurrences. The thicker the line, the more frequent co-occurrences. Simple, right?
+
+Bob Fioretti
+The highest co-occurring terms refer to the mayoral forum and structural change. Also notable in his network are mentions of an elected school board, the issue of property taxes, and a reference to the current Mayor, Rahm Emanuel. Other individuals mentioned include competitors Gery Chico, Toni Preckwinkle, and Ed Burke.
+
+Susana Mendoza
+Most prominent in Susana Mendoza’s network is the idea of shaping Chicago’s Future. Also of note is the use of “twill”, short for “Twitter Illinois”.
+
+John Kozlar
+John Kozlar’s graph is extremely sparse, only mentioning corrupt politicians in addition to the mayoral forum.
+
+Neal Sales-Griffin
+Sales-Griffin’s network is also sparse and mostly mentions terms related to his podcast. The only notable idea related to the campaign is collecting signatures.
+
+Amaya Enyia
+Amaya Enyia has a number of different references in her word network. Among the most interesting are references the Community Renewal Society (wearecrs) and possibly Chance the Rapper (chanceforchange).
+
+Willie Wilson
+Where to begin with Willie Wilson? There are a number of references to local media outlets, as well as to facebook and instagram. Issues referred to in his word network include bail reform, economic equality, and red light cameras.
+
+Jerry Joyce
+Jerry Joyce’s word network is relatively sparse, with mentions of neighborhood schools and public safety.
+
+La Shawn K Ford
+Most of the word network of La Shawn K Ford refers to candidate himself.
+
+Bill Daley
+Bill Daley’s word network heavily refers to gun violence, public safety, crime, and property taxes.
+
+Lori Lightfoot
+The word network of Lori Lightfoot presents her as one of stye more progressive candidates in the race. It refers to government accountability, the consent decree, the Laquan McDonald issue, as well as social justice, and affordable housing. It is also one of the few networks that refers to the LGBTQ community.
+
+Garry McCarthy
+Garry McCarthy’s word network refers to a number of subjects, among them neighborhood schools and gun violence. The network is notable for a number of references to the current Mayor, Rahm Emanuel.
+
+Gery Chico
+Gery Chico’s network is oddly sparse, referring mainly to his candidacy. In addition, references to public safety and his wife.
+
+Toni Preckwinkle
+Toni Preckwinkle’s word network is notable for its references to unions (SEIU,CTU). It also frames her as progressive, referring to affordable housing and the LGBTQ community. The subject of the school board is also mentioned.
+
+Paul Vallas
+A significant portion of Paul Vallas’ word network refers to economic development and public schools. Public safety and violence prevention are also mentioned. 

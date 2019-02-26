@@ -1,0 +1,56 @@
+# Word Associations
+
+In this section, we will look at words representing various issues facing
+The City of Chicago, and the terms used in the campaigns that best correlate with
+them.
+
+## Process
+
+In the code below, we will take the text from all of the tweets, get rid of stop
+words, url's, numbers, hashtags, and other characters not part of the message of
+the tweet. The names of the candidates are also removed. The remaining text is then
+parsed out into individual words paired with the tweet they appeared in. 
+
+Using the cast_dtm() function from the tm package, the words and tweets are then cast
+into a sparse matrix. Finally, depending on the term we use, the correlation between the 
+term and the words in the matrix is calculated. The top results for each term is plotted 
+below.
+
+```{r echo=FALSE}
+term_assoc <- on_campaign %>% mutate(text = str_remove_all(text,remove_reg)) %>% mutate(text = rm_twitter_url(text)) %>% mutate(text = rm_hash(text))
+term_assoc <- term_assoc %>% mutate(text = rm_number(text))
+mayor_dtm <- term_assoc %>% select(status_id,text) %>% unnest_tokens(word,text) %>% count(status_id,word)
+mayor_dtm <- mayor_dtm %>% filter(!word %in% stop_words$word) %>% filter(!word %in% my_stopwords$word)
+mayor_dtm2 <- mayor_dtm[!grepl("toni|preckwinkle|paul|vallas|gery|chico|garry|mccarthy|lori|lightfoot|bill|daley|amara|enyia|bob|fioretti|jerry|joyce|la|shawn|ford|neal|sales-griffin|dr|willie|wilson|john|kozlar",mayor_dtm$word),]
+mayor_dtm2 <- mayor_dtm2 %>% cast_dtm(status_id,word,n)
+```
+
+The findAssocs() function, also from the tm package, is used to find the best correlation results for terms above a certain threshold. The terms to be examined are the following:
+
+1. TIFs
+2. Casinos
+3. Police
+4. Taxes
+5. Violence
+6. Marijuana
+
+```{r include = FALSE, message = FALSE}
+tifs_assocs <- data.frame(findAssocs(mayor_dtm2,'tifs',.25))
+related_tifs <- tifs_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,tifs),y=tifs))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
+casinos_assocs <- data.frame(findAssocs(mayor_dtm2,'casinos',.5))
+related_casinos <- casinos_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,casinos),y=casinos))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
+police_assocs <- data.frame(findAssocs(mayor_dtm2,'police',.19))
+related_police <- police_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,police),y=police))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
+taxes_assocs <- data.frame(findAssocs(mayor_dtm2,'taxes',.17))
+related_taxes <- taxes_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,taxes),y=taxes))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
+violence_assocs <- data.frame(findAssocs(mayor_dtm2,'violence',.17))
+related_violence <- violence_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,violence),y=violence))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
+marijuana_assocs <- data.frame(findAssocs(mayor_dtm2,'marijuana',.37))
+related_marijuana <- marijuana_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,marijuana),y=marijuana))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
+```
+```{r echo=FALSE,fig.width=8}
+grid.arrange(related_tifs,related_casinos,related_police,related_taxes,related_violence,related_marijuana,ncol=3)
+```
+
+A note about the results: although we are looking for the best correlating terms, some of these correlations may look low. However, when considering the many available words that could appear 
+in the same tweets, a low score does not necessarily mean a weak pairwise term association.

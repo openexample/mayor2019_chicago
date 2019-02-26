@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 7 Sentiment Analysis | Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates</title>
+  <meta name="description" content="Visualizing how the 2019 Chicago Mayoral Candidates used Twitter during their campaigns.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 7 Sentiment Analysis | Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Visualizing how the 2019 Chicago Mayoral Candidates used Twitter during their campaigns." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Sentiment Analysis | Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates" />
+  
+  <meta name="twitter:description" content="Visualizing how the 2019 Chicago Mayoral Candidates used Twitter during their campaigns." />
+  
+
+<meta name="author" content="Pierre Phanor">
+
+
+<meta name="date" content="2019-02-25">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="candidate-correlation.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Candidates</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#candidates-covered"><i class="fa fa-check"></i><b>1.2</b> Candidates Covered</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#code-examples"><i class="fa fa-check"></i><b>1.3</b> Code Examples</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>1.4</b> Outline</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#data-acquisition"><i class="fa fa-check"></i><b>1.5</b> Data Acquisition</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="general-statistics.html"><a href="general-statistics.html"><i class="fa fa-check"></i><b>2</b> General Statistics</a><ul>
+<li class="chapter" data-level="2.1" data-path="general-statistics.html"><a href="general-statistics.html#twitter-activity"><i class="fa fa-check"></i><b>2.1</b> Twitter Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="word-networks.html"><a href="word-networks.html"><i class="fa fa-check"></i><b>3</b> Word Networks</a><ul>
+<li class="chapter" data-level="3.1" data-path="word-networks.html"><a href="word-networks.html#process-and-code"><i class="fa fa-check"></i><b>3.1</b> Process and Code</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="word-networks.html"><a href="word-networks.html#bob-fioretti"><i class="fa fa-check"></i><b>3.1.1</b> Bob Fioretti</a></li>
+<li class="chapter" data-level="3.1.2" data-path="word-networks.html"><a href="word-networks.html#susana-mendoza"><i class="fa fa-check"></i><b>3.1.2</b> Susana Mendoza</a></li>
+<li class="chapter" data-level="3.1.3" data-path="word-networks.html"><a href="word-networks.html#john-kozlar"><i class="fa fa-check"></i><b>3.1.3</b> John Kozlar</a></li>
+<li class="chapter" data-level="3.1.4" data-path="word-networks.html"><a href="word-networks.html#neal-sales-griffin"><i class="fa fa-check"></i><b>3.1.4</b> Neal Sales-Griffin</a></li>
+<li class="chapter" data-level="3.1.5" data-path="word-networks.html"><a href="word-networks.html#amaya-enyia"><i class="fa fa-check"></i><b>3.1.5</b> Amaya Enyia</a></li>
+<li class="chapter" data-level="3.1.6" data-path="word-networks.html"><a href="word-networks.html#willie-wilson"><i class="fa fa-check"></i><b>3.1.6</b> Willie Wilson</a></li>
+<li class="chapter" data-level="3.1.7" data-path="word-networks.html"><a href="word-networks.html#jerry-joyce"><i class="fa fa-check"></i><b>3.1.7</b> Jerry Joyce</a></li>
+<li class="chapter" data-level="3.1.8" data-path="word-networks.html"><a href="word-networks.html#la-shawn-k-ford"><i class="fa fa-check"></i><b>3.1.8</b> La Shawn K Ford</a></li>
+<li class="chapter" data-level="3.1.9" data-path="word-networks.html"><a href="word-networks.html#bill-daley"><i class="fa fa-check"></i><b>3.1.9</b> Bill Daley</a></li>
+<li class="chapter" data-level="3.1.10" data-path="word-networks.html"><a href="word-networks.html#lori-lightfoot"><i class="fa fa-check"></i><b>3.1.10</b> Lori Lightfoot</a></li>
+<li class="chapter" data-level="3.1.11" data-path="word-networks.html"><a href="word-networks.html#garry-mccarthy"><i class="fa fa-check"></i><b>3.1.11</b> Garry McCarthy</a></li>
+<li class="chapter" data-level="3.1.12" data-path="word-networks.html"><a href="word-networks.html#gery-chico"><i class="fa fa-check"></i><b>3.1.12</b> Gery Chico</a></li>
+<li class="chapter" data-level="3.1.13" data-path="word-networks.html"><a href="word-networks.html#toni-preckwinkle"><i class="fa fa-check"></i><b>3.1.13</b> Toni Preckwinkle</a></li>
+<li class="chapter" data-level="3.1.14" data-path="word-networks.html"><a href="word-networks.html#paul-vallas"><i class="fa fa-check"></i><b>3.1.14</b> Paul Vallas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="hashtag-networks.html"><a href="hashtag-networks.html"><i class="fa fa-check"></i><b>4</b> Hashtag Networks</a><ul>
+<li class="chapter" data-level="4.1" data-path="hashtag-networks.html"><a href="hashtag-networks.html#process-and-code-1"><i class="fa fa-check"></i><b>4.1</b> Process and Code</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="hashtag-networks.html"><a href="hashtag-networks.html#bob-fioretti-1"><i class="fa fa-check"></i><b>4.1.1</b> Bob Fioretti</a></li>
+<li class="chapter" data-level="4.1.2" data-path="hashtag-networks.html"><a href="hashtag-networks.html#john-kozlar-1"><i class="fa fa-check"></i><b>4.1.2</b> John Kozlar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="hashtag-networks.html"><a href="hashtag-networks.html#neal-sales-griffin-1"><i class="fa fa-check"></i><b>4.1.3</b> Neal Sales-Griffin</a></li>
+<li class="chapter" data-level="4.1.4" data-path="hashtag-networks.html"><a href="hashtag-networks.html#amara-enyia"><i class="fa fa-check"></i><b>4.1.4</b> Amara Enyia</a></li>
+<li class="chapter" data-level="4.1.5" data-path="hashtag-networks.html"><a href="hashtag-networks.html#susana-mendoza-1"><i class="fa fa-check"></i><b>4.1.5</b> Susana Mendoza</a></li>
+<li class="chapter" data-level="4.1.6" data-path="hashtag-networks.html"><a href="hashtag-networks.html#willie-wilson-1"><i class="fa fa-check"></i><b>4.1.6</b> Willie Wilson</a></li>
+<li class="chapter" data-level="4.1.7" data-path="hashtag-networks.html"><a href="hashtag-networks.html#jerry-joyce-1"><i class="fa fa-check"></i><b>4.1.7</b> Jerry Joyce</a></li>
+<li class="chapter" data-level="4.1.8" data-path="hashtag-networks.html"><a href="hashtag-networks.html#la-shawn-k-ford-1"><i class="fa fa-check"></i><b>4.1.8</b> La Shawn K Ford</a></li>
+<li class="chapter" data-level="4.1.9" data-path="hashtag-networks.html"><a href="hashtag-networks.html#bill-daley-1"><i class="fa fa-check"></i><b>4.1.9</b> Bill Daley</a></li>
+<li class="chapter" data-level="4.1.10" data-path="hashtag-networks.html"><a href="hashtag-networks.html#lori-lightfoot-1"><i class="fa fa-check"></i><b>4.1.10</b> Lori Lightfoot</a></li>
+<li class="chapter" data-level="4.1.11" data-path="hashtag-networks.html"><a href="hashtag-networks.html#garry-mccarthy-1"><i class="fa fa-check"></i><b>4.1.11</b> Garry McCarthy</a></li>
+<li class="chapter" data-level="4.1.12" data-path="hashtag-networks.html"><a href="hashtag-networks.html#gery-chico-1"><i class="fa fa-check"></i><b>4.1.12</b> Gery Chico</a></li>
+<li class="chapter" data-level="4.1.13" data-path="hashtag-networks.html"><a href="hashtag-networks.html#toni-preckwinkle-1"><i class="fa fa-check"></i><b>4.1.13</b> Toni Preckwinkle</a></li>
+<li class="chapter" data-level="4.1.14" data-path="hashtag-networks.html"><a href="hashtag-networks.html#paul-vallas-1"><i class="fa fa-check"></i><b>4.1.14</b> Paul Vallas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="word-associations.html"><a href="word-associations.html"><i class="fa fa-check"></i><b>5</b> Word Associations</a><ul>
+<li class="chapter" data-level="5.1" data-path="word-associations.html"><a href="word-associations.html#process"><i class="fa fa-check"></i><b>5.1</b> Process</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="candidate-correlation.html"><a href="candidate-correlation.html"><i class="fa fa-check"></i><b>6</b> Candidate Correlation</a></li>
+<li class="chapter" data-level="7" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>7</b> Sentiment Analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#how-we-will-measure-sentiment"><i class="fa fa-check"></i><b>7.1</b> How we will measure sentiment</a></li>
+<li class="chapter" data-level="7.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#average-term-score-by-candidate"><i class="fa fa-check"></i><b>7.2</b> Average term score by candidate</a></li>
+<li class="chapter" data-level="7.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#highest-contributions-to-sentiment"><i class="fa fa-check"></i><b>7.3</b> Highest Contributions to Sentiment</a></li>
+<li class="chapter" data-level="7.4" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#top-contributions-to-sentiment-by-candidate"><i class="fa fa-check"></i><b>7.4</b> Top Contributions to Sentiment by Candidate</a></li>
+<li class="chapter" data-level="7.5" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#highest-and-lowest-average-scoring-tweets"><i class="fa fa-check"></i><b>7.5</b> Highest (and Lowest) Average Scoring Tweets</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sentiment-analysis" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Sentiment Analysis</h1>
+<p>One way to evaluate the messaging done by candidates is to gauge the emotion and opinion behind their statements. In this section we will be examining aspects of the sentiment of each candidate’s messages throughout their campaigns.</p>
+<div id="how-we-will-measure-sentiment" class="section level2">
+<h2><span class="header-section-number">7.1</span> How we will measure sentiment</h2>
+<p>We will use the AFINN Lexicon, from Finn Arup Nielsen to examine the terms used in the candidate’s tweets. Detailed information on the lexicon can be found in the paper <em>A</em> <em>new</em> <em>ANEW:</em> <em>evaluation</em> <em>of</em> <em>a</em> <em>word</em> <em>list</em> <em>for</em> <em>sentiment analysis in microblogs?, proceedings of the ESWC 2011 Workshop</em>. A copy of the paper can be found <a href="http://corpustext.com/reference/sentiment_afinn.html">here</a>. Simply put, the lexicon rates terms used as being either “positve” or “negative”. The score for each term is within a range of -5 (very negative) to 5 (very positive).</p>
+</div>
+<div id="average-term-score-by-candidate" class="section level2">
+<h2><span class="header-section-number">7.2</span> Average term score by candidate</h2>
+<p>For example, we can look at the average score for each term used by the candidates in their twitter messages during each of their campaigns. The code below with take each term used by the candidates, assign a score from the AFINN Lexicon for each term it shares in the candidate’s tweet, multiply the scores by the number of times each term is used (we’ll call this contribution to sentiment), and divides that result by the total number of terms appearing in the messages.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>The results show that Willie Wilson is, by far, is the most “positive”, averaging a score of over one per term used. Candidate Wilson is followed by John Kozlar and Paul Vallas. The least “positive” on average is Garry McCarthy.</p>
+</div>
+<div id="highest-contributions-to-sentiment" class="section level2">
+<h2><span class="header-section-number">7.3</span> Highest Contributions to Sentiment</h2>
+<p>At this point, you might be asking what are the words that are making these messages positive or negative. The following code will extract the 25 words that, from all of the timelines by their frequency of use and assigned score, are most prominent in contributions made to overall twitter message sentiment. This will include both prominent positive and negative words.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">message_contributions &lt;-<span class="st"> </span>cleaned_text2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(<span class="kw">get_sentiments</span>(<span class="st">&#39;afinn&#39;</span>),<span class="dt">by=</span><span class="st">&#39;word&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(word) <span class="op">%&gt;%</span>
+<span class="kw">summarise</span>(<span class="dt">occurences =</span> <span class="kw">n</span>(),<span class="dt">contribution =</span> <span class="kw">sum</span>(score))
+message_contributions <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="dv">25</span>,<span class="kw">abs</span>(contribution)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">word=</span><span class="kw">reorder</span>(word,contribution)) <span class="op">%&gt;%</span>
+<span class="kw">ggplot</span>(<span class="kw">aes</span>(word,contribution,<span class="dt">fill=</span>contribution <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>))<span class="op">+</span><span class="kw">geom_col</span>(<span class="dt">show.legend=</span>F)<span class="op">+</span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">color=</span><span class="st">&#39;black&#39;</span>))<span class="op">+</span><span class="kw">coord_flip</span>()<span class="op">+</span><span class="kw">ggtitle</span>(<span class="st">&#39;Top 25 words contributing to message sentiment&#39;</span>)</code></pre></div>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p>As you can see, the words “suport” and “happy” are the most prominient of the positive words contributing to sentiment. Meanwhile, “crime” and “violence” and the most prominent negative words.</p>
+</div>
+<div id="top-contributions-to-sentiment-by-candidate" class="section level2">
+<h2><span class="header-section-number">7.4</span> Top Contributions to Sentiment by Candidate</h2>
+<p>We can do something similar for each of the candidates. Below are the plots for each candidate indicating the top twelve words for their timelines by their contribution to sentiment (again, score times number of times used). If there are ties in contribution, all tied words are used.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-56-1.png" width="912" /></p>
+<p>One thing to note here is that for Sales-Griffin and Kozlar, their lack of twitter activity during their campaign introduces a higher chance for ties. Hopefully, this will be resolved with the data from February. The results also give a hint as to why Willie Wilson and Garry McCarthy are at the extremes in terms of average score per term.</p>
+</div>
+<div id="highest-and-lowest-average-scoring-tweets" class="section level2">
+<h2><span class="header-section-number">7.5</span> Highest (and Lowest) Average Scoring Tweets</h2>
+<p>Besides looking at individual words, we can assess the average sentiment score for a given tweet. In the code below, we can ascertain the average score per term tweet for each tweet in the dataset. We’ll try to take the top scoring tweets, as well as the lowest scoring tweets. <strong>In a later version of this document, I plan to include average scores with the tweets</strong>.</p>
+<p>Below are the tweets with the top average sentiment scores.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+candidate_name
+</th>
+<th style="text-align:left;">
+status_id
+</th>
+<th style="text-align:left;">
+text
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Paul Vallas
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1077629743841857538
+</td>
+<td style="text-align:left;width: 30em; ">
+#TeamVallas &amp;amp; I wish you and yours health and happiness this Christmas. We are grateful for all who have given their time, talent, and resources to the #VallasforAllChicago campaign. We wish you a beautiful holiday, happy New Year, and joyful season. #ChristmasDay2018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Paul Vallas
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1071987410509156352
+</td>
+<td style="text-align:left;width: 30em; ">
+Fantastic game today! Proud of #DaBears for a great game tonight and excited to face the <span class="citation">@packers</span> next week and bring #Chicago another win! #BearDown #LARvsCHI #Bears <span class="citation">@ChicagoBears</span> #SundayNightFootball
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Paul Vallas
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1069697002949222400
+</td>
+<td style="text-align:left;width: 30em; ">
+Happy 200th birthday to our wonderful home state, #llinois! From fields of agriculture, cities lining our rivers and great lakes, &amp;amp; rolling bluffs &amp;amp; fantastic people, we are proud to be the Land of Lincoln and one with everyone in our great state. #IllinoisProud #Illinois200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Paul Vallas
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1064975785352708097
+</td>
+<td style="text-align:left;width: 30em; ">
+“It’s a sign of the grassroots support that we have that we think is going to put us over the finish line.” Thank you to our amazing #TeamVallas volunteers for making this possible, I am grateful for the hours of petitioning you’ve given to this campaign. <a href="https://t.co/ACT3EwzA5U" class="uri">https://t.co/ACT3EwzA5U</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Paul Vallas
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1058099823977684994
+</td>
+<td style="text-align:left;width: 30em; ">
+#NationalAuthorsDay is a wonderful day in Chicago to celebrate the fantastic works of our city’s writers such as Sandra Cisneros, Gwendolyn Brooks, Carl Sandburg, &amp;amp; Ernest Hemingway, among other spectacular poets &amp;amp; writers from Chicago. (1/2)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Paul Vallas
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1031330824543760384
+</td>
+<td style="text-align:left;width: 30em; ">
+I spent last night having a great time at the Pakistani Independence Day Festival. I was delighted to meet, speak, and celebrate with Chicago’s Pakistani-American community. Thank you to everyone for organizing a wonderful event yesterday evening. <a href="https://t.co/Domoa3hM3c" class="uri">https://t.co/Domoa3hM3c</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Gery Chico
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1087444162725793793
+</td>
+<td style="text-align:left;width: 30em; ">
+Thanks to <span class="citation">@RPCoalition</span> for hosting such a wonderful and inspiring breakfast this morning. I enjoyed meeting those who attended and honoring Martin Luther King Jr. #ChicoforMayor #ChiMayor2019 #MLKDay <a href="https://t.co/Hsb0q7L7d7" class="uri">https://t.co/Hsb0q7L7d7</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Gery Chico
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1071894681481592833
+</td>
+<td style="text-align:left;width: 30em; ">
+What a fun time at the South Chicago YMCA Christmas Dinner Dance! We met so many supporters and friends. Fantastic music, atmosphere and most importantly - beautiful people! <a href="https://t.co/txUieY3Yzw" class="uri">https://t.co/txUieY3Yzw</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Lori Lightfoot
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1045499670301212674
+</td>
+<td style="text-align:left;width: 30em; ">
+Happy to celebrate with the 20 Most Inspiring Chicagoans at the annual <span class="citation">@StreetWise_CHI</span> Gala. An amazing night of celebration which reminds us all that we must do more to help each other. <a href="https://t.co/mlkrtXhrN9" class="uri">https://t.co/mlkrtXhrN9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Lori Lightfoot
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1031167694480056323
+</td>
+<td style="text-align:left;width: 30em; ">
+Celebrated fun, peace, and community pride at the 56th Annual Englewood Back to School Parade yesterday. <a href="https://t.co/KdKBHv5Amx" class="uri">https://t.co/KdKBHv5Amx</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Lori Lightfoot
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x998671355229999104
+</td>
+<td style="text-align:left;width: 30em; ">
+Thrilled to celebrate my friend, the incredible visual artist Nick Cave, awarded the Creative Voice award at today’s <span class="citation">@ArtsAllianceIL</span> benefit lunch. <a href="https://t.co/fcsIjrmiXl" class="uri">https://t.co/fcsIjrmiXl</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Bill Daley
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1080228350197747712
+</td>
+<td style="text-align:left;width: 30em; ">
+May your 2019 be filled with lots of happiness, health, luck and love. Let’s make this the best year for Chicago yet!
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Willie Wilson
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1078900336897810433
+</td>
+<td style="text-align:left;width: 30em; ">
+Celebrating <span class="citation">@kwanzaa</span> at <span class="citation">@MX_College</span>. Today we celebrate Ujima (Collective Work &amp;amp; Responsibility). A quality that fits perfectly with our campaign: that inclusion is the key and together is the way! Happy Kwanzaa! #ThePeoplesMayor #ALLIN #ChiMayor19 #ChicagoElection <a href="https://t.co/ZKwQ4QhEuY" class="uri">https://t.co/ZKwQ4QhEuY</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Willie Wilson
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1076260175911313409
+</td>
+<td style="text-align:left;width: 30em; ">
+Receiving holiday joy from the students at Fuller School of Excellence today. Thank you for your invitation! Teachers doing an EXCELLENT job with the children who are our future! Keep up the amazing work! #ThePeoplesMayor #ALLIN <a href="https://t.co/pUU0KsJiID" class="uri">https://t.co/pUU0KsJiID</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Willie Wilson
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1065004103074484224
+</td>
+<td style="text-align:left;width: 30em; ">
+Iglesia Luterana de la Trinidad <span class="citation">@TrinidadLutheranChurch</span> for Bingo Tuesdays…fun raffle with <span class="citation">@RayRubio</span>…a few lucky winners will be draped in our OFFICIAL campaign gear! Congratulations! FUN in Humboldt Park! #ThePeoplesMayor #ChiMayor19 #ALLIN <a href="https://t.co/nJTbO6dH7B" class="uri">https://t.co/nJTbO6dH7B</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Willie Wilson
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1043676348705918976
+</td>
+<td style="text-align:left;width: 30em; ">
+Taking part in Anniversary Celebration <span class="citation">@MBIsraelHouseofPrayerChicago</span> and Rev. Dr. Swaraj Kumar Perumalla. What a beautiful night! Congrats to my Christian brothers &amp;amp; sisters. Keep lifting Him up! We will win for all the right reasons #ChiMayor19 #Chicago #williewilsonformayor <a href="https://t.co/UBOzCDj3nx" class="uri">https://t.co/UBOzCDj3nx</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Willie Wilson
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1041117037219725312
+</td>
+<td style="text-align:left;width: 30em; ">
+Celebrating <span class="citation">@ElGritoChicago</span> <span class="citation">@Millennium_Park</span> Downtown #Chicago with the beautiful Mariachi Choir on a picture perfect sunny afternoon hosted by <span class="citation">@MariachiHeritageFoundation</span> #ALLIN #WontStop #williewilsonformayor #williewilson <a href="https://t.co/eiAy8mZf3H" class="uri">https://t.co/eiAy8mZf3H</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Susana Mendoza
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1082394161461018627
+</td>
+<td style="text-align:left;width: 30em; ">
+I am so thrilled to be endorsed by the working men and women of <span class="citation">@LiUNAchicago</span>. Throughout my career, I’ve been proud to stand shoulder-to-shoulder with our working families, and that will continue when I’m mayor. (1/2) #ChiMayor19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Susana Mendoza
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1079980626441310209
+</td>
+<td style="text-align:left;width: 30em; ">
+As we turn our eyes to 2019 make sure to take your loved ones in your arms and hold them close. I am blessed to be able to spend New Years with my family. May your 2019 be filled with love, joy, and happiness. 🎇 #HappyNewYear 🎆 <a href="https://t.co/wf8kSBrf2D" class="uri">https://t.co/wf8kSBrf2D</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Susana Mendoza
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1078056230403391488
+</td>
+<td style="text-align:left;width: 30em; ">
+Happy first night of Kwanzaa to all those celebrating. For the next seven days may you and your family be filled with love and happiness. #HappyKwanzaa
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Susana Mendoza
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1077659805223976961
+</td>
+<td style="text-align:left;width: 30em; ">
+I am blessed to spend the holiday season this year with my family and the people I love. Merry Christmas and Happy Holidays! #twill 🎄 <a href="https://t.co/QRpt7CPOd0" class="uri">https://t.co/QRpt7CPOd0</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Bob Fioretti
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1079984707339718658
+</td>
+<td style="text-align:left;width: 30em; ">
+Happy New Year. May it be a happy and prosperous #2019 #WhatsGreatAboutChicago <a href="https://t.co/ejZ0fVMJMj" class="uri">https://t.co/ejZ0fVMJMj</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>And here are the tweets with the lowest average sentiment scores.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+candidate_name
+</th>
+<th style="text-align:left;">
+status_id
+</th>
+<th style="text-align:left;">
+text
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Paul Vallas
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1075052807085010945
+</td>
+<td style="text-align:left;width: 30em; ">
+I met &amp;amp; spoke w/residents of the #HumboldtPark community about violence prevention &amp;amp; the core issues of violence in #Chicago in my latest violence prevention #townhall. Thank you to the organizers &amp;amp; people who attended &amp;amp; watched online. (1/2) <a href="https://t.co/QdICW7r4E1" class="uri">https://t.co/QdICW7r4E1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Gery Chico
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1090335728175845377
+</td>
+<td style="text-align:left;width: 30em; ">
+Sadden to hear about the recent hate crime against Empire actor, Jussie Smollett. This act has no place in Chicago and we can not tolerate such hate.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Garry McCarthy
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1078714783220797440
+</td>
+<td style="text-align:left;width: 30em; ">
+and that person perished as well. That criminal should be charged with felony murder for all of their deaths. So why is this case any different? Because a train is involved? Because only police officers were killed? 3/4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Garry McCarthy
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1078714782428135424
+</td>
+<td style="text-align:left;width: 30em; ">
+new precedent for criminals – they are no longer accountable for their actions. Imagine a criminal who shot into the air takes 2 police officers on a high-speed car chase. Imagine the pursuing officers crashed their vehicle and perished – or worse yet, they hit a bystander 2/4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Garry McCarthy
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1038861952691462144
+</td>
+<td style="text-align:left;width: 30em; ">
+“But early Saturday morning, she heard seven or eight gunshots. Her children awoke in terror.” Children waking up in fear of their lives are not how our city thrives. My proven holistic crime strategy will turn the tide against violent crime and create a safer Chicago.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Garry McCarthy
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1037351716721704960
+</td>
+<td style="text-align:left;width: 30em; ">
+I am the only candidate who will be able to turn the tide against violent crime in Chicago. Read more about my Crime Plan here: <a href="https://t.co/GuWEuE6qun" class="uri">https://t.co/GuWEuE6qun</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Lori Lightfoot
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1026237846703824896
+</td>
+<td style="text-align:left;width: 30em; ">
+It’s unconscionable that Rahm Emanuel is silent when 60 people were shot this weekend alone. This is a catastrophic failure of leadership. Mr. Mayor, even if you don’t have a plan, the least you can do is show some empathy in the face of this crisis. <a href="https://t.co/FjyWan0j9M" class="uri">https://t.co/FjyWan0j9M</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Lori Lightfoot
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1010184414918250496
+</td>
+<td style="text-align:left;width: 30em; ">
+Trump still hasn’t fixed the humanitarian crisis he created. Asylum seekers are not criminals &amp;amp; should be treated fairly under int’l law. We need to unite ALL children w/ their families now! America isn’t great when we re-victimize the most vulnerable. <a href="https://t.co/oQg5CbofI1" class="uri">https://t.co/oQg5CbofI1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Bill Daley
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1064705438552416257
+</td>
+<td style="text-align:left;width: 30em; ">
+Tonight, we lost more people to a senseless shooting, including Officer Samuel Jimenez. During an act of violence, his bravery led him to put his life before that of others. Our hearts are heavy for all lives lost today. Let’s keep them in our prayers.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+La Shawn K Ford
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1088293259368194048
+</td>
+<td style="text-align:left;width: 30em; ">
+“We have to destroy the machine politics in this city. I’ve been elected for 12 years. There’s a way to destroy the machine, and that’s with People Power. It’s going to take all of us to destroy this corruption. I’ve been standing up against the party for the people 1/2 <a href="https://t.co/GMcl0hns1Y" class="uri">https://t.co/GMcl0hns1Y</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Amara Enyia
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1064915767622344704
+</td>
+<td style="text-align:left;width: 30em; ">
+On Monday she was pronounced dead; killed at the hand of a former romantic partner and a victim of one of the most prevalent and pernicious risks to women in our developed nation. (2/6)
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="candidate-correlation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

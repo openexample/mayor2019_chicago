@@ -1,0 +1,87 @@
+The 2019 Chicago Mayoral Election is scheduled to take place on 
+February 26. On that day, residents will be making decisions
+on the persons who will lead the city and chart its course in the face of issues 
+such as Crime, Pension Obligations, and Affordable Housing. The goal
+of this project is to analyze how the candidates communicate to Chicago's
+residents through Twitter and, hopefully, gleam some insight into
+each candidate's vision for the city.
+
+Acknowledgements
+Simply put, I would not have been motivated to do this project
+without the book Text Mining with R, written by Julia Silge and 
+David Robinson and their tidytext package. Most of the techniques 
+used in this document are from the book. Text Mining with R serves
+as a insightful and concise entry into Natural Language Processing.
+
+Along with the tidytext package, I should take this time to recognize
+the other packages used in the document and their authors.
+"Table of Packages used"
+
+What this document isn't
+In this document I will endeavor to not reveal my own preference for 
+Mayor. My own preference serves no purpose here, and can only confuse
+the goal of showing how the candidates utilize the medium of Twitter
+to communicate with potential voters. However, I'm not above pointing
+out what some may deem as "curious" uses of Twitter by the candidates.
+I might even crack a joke or two...
+
+Candidates Covered
+Below is a table of the candidates for Chicago City Mayor as of January 
+31, 2019. Included with their names are their present or previous positions
+as well as their Twitter username or handle. The handles were taken from 
+each of the candidate's website.
+
+
+Code Examples
+In the document, I will try to highlight some of the underlying code
+for the analysis to illustrate how the data were processed. The full 
+code for the analysis will be made available on Github "here", as well 
+as the datasets used.
+
+Outline
+Chapter 1 will discuss how the data for the project were acquired. I'll 
+also discuss some of the initial decisions made for the analysis. A
+rundown on each of the candidates will also be included.
+
+In Chapter 2, we will go over some of the basic statistics involved with
+the candidate's Twitter use. 
+
+Chapter 3 will illustrate the word networks associated with each of the
+candidates. The goal of these networks is to illustrate relationships of
+terms and how they can show themes in narratives.
+
+We'll do the same in Chapter 4, but this time with hashtags. Hashtags can
+also help convey a candidate's stance, but in a more concise and connected
+way.
+
+In Chapter 5, I'll introduce the use of Term Frequency - Inverse Document
+Frequency (TF-IDF) to discern the importance of a term relative to a 
+collection of terms. We'll also introduce the use of n-grams.
+
+For Chapter 6, We will take a quick look to see how similar the candidates are
+with respect to the terms they use.
+
+Finally, in Chapter 7 we will look perceived positive and negative sentiment
+in the messages the candidates use.   
+
+Data Acquisition
+The Data were acquired from Twitter through use of the Twitter Developer
+App and the rtweet package from R. By using the rtweet package, we were
+able to access the Twitter API and download, potentially, up to the last 
+3200 tweets from each candidate's Twitter feed with the get_timeline() function. 
+The collected data were, then, converted to a comma delimited file for 
+portability and easier access. More information on Twitter Developer Apps can 
+be found here.
+
+The dataset was, then, filtered so that only the tweets that occured during the 
+campaign was used. To that end, only the tweets from the candidates' announcement
+date to January 31, 2019 were used. News reports were used for determining each
+candidate's announcement date with cross referencing using Wikipedia or Ballotpedia, when
+possible.
+
+Each record of a tweet is made up of 88 different variables covering attributes such as 
+the text of the message, username, hastags used, and retweet information, to name a few.
+
+For the most part, the information downloaded from Twitter is our primary source of data.
+However, the actual names of the candidates were added to the records and a .csv
+file contating rates of Twitter usage were utilized to help speed up analysis.

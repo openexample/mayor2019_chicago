@@ -1,0 +1,204 @@
+#Hashtag Networks
+
+The use of hashtags also help in forming a narrative and clarifying a stance
+taken in a campaign. In this section, we will take a look at how each of the
+candidates use hashtags to communicate with potential voters.
+
+## Process and Code
+
+In the dataset from Twitter, hashtags are recorded in a seperate variable, as 
+well as being part of the text. The hashtags from each tweet are taken from this
+variable, and a similar procedure to the processing of word networks is used to 
+build networks of co-occuring hashtags. However, a hashtag would only have to 
+appear at least twice to be used.
+
+```{r include = FALSE, message = FALSE}
+candidate_hash <- function(candidate_f){
+  subj_hash <- candidate_f$hashtags
+  subj_hash <- subj_hash[subj_hash != '']
+  subj_hash <- as.data.frame(subj_hash)
+  subj_hash_bigram <- subj_hash %>% unnest_tokens(bigram,subj_hash,token='ngrams',n=2)
+  subj_hash_separated <- subj_hash_bigram %>% separate(bigram,c('word1','word2'),sep=' ')
+  subj_hash_counts <- subj_hash_separated %>% count(word1,word2,sort=T)
+  subj_hash_map <- subj_hash_counts %>% filter(n > 1) %>% graph_from_data_frame() %>% ggraph(layout='fr')+geom_edge_link(aes(edge_alpha=n,edge_width=n),edge_colour='darkred')+geom_node_point(color='darkslategray4',size=3)+geom_node_text(aes(label=name),vjust=1.8,size=3)+theme_void()
+  return(subj_hash_map)
+}
+paul_hash <- candidate_hash(paul_f)
+paul_hash <- paul_hash+labs(title='Hashtag Network: Paul Vallas')
+
+toni_hash <- candidate_hash(toni_f)
+toni_hash <- toni_hash+labs(title='Hashtag Network: Toni Preckwinkle')
+
+gery_hash <- candidate_hash(gery_f)
+gery_hash <- gery_hash+labs(title='Hashtag Network: Gery Chico')
+
+garry_hash <- candidate_hash(garry_f)
+garry_hash <- garry_hash+labs(title='Hashtag Network: Garry McCarthy')
+
+lori_hash <- candidate_hash(lori_f)
+lori_hash <- lori_hash+labs(title='Hashtag Network: Lori Lightfoot')
+
+bill_hash <- candidate_hash(bill_f)
+bill_hash <- bill_hash+labs(title='Hashtag Network: Bill Daley')
+
+lashawn_hash <- candidate_hash(lashawn_f)
+lashawn_hash <- lashawn_hash+labs(title='Hashtag Network: La Shawn K Ford')
+
+jerry_hash <- candidate_hash(jerry_f)
+jerry_hash <- jerry_hash+labs(title="Hashtag Network: Jerry Joyce")
+
+will_hash <- candidate_hash(will_f)
+will_hash <- will_hash+labs(title="Hashtag Network: Willie Wilson")
+
+sue_hash <- candidate_hash(sue_f)
+sue_hash <- sue_hash+labs(title="Hashtag Network: Susana Mendoza")
+
+ama_hash <- candidate_hash(ama_f)
+ama_hash <- ama_hash+labs(title="Hashtag Network: Amara Enyia")
+
+neal_hash <- candidate_hash(neal_f)
+neal_hash <- neal_hash+labs(title="Hashtag Network: Neal Sales-Griffin")
+
+john_hash <- candidate_hash(john_f)
+john_hash <- john_hash+labs(title="Hashtag Network: John Kozlar")
+
+bob_hash <- candidate_hash(bob_f)
+bob_hash <- bob_hash+labs(title="Hashtag Network: Bob Fioretti")
+
+```
+
+### Bob Fioretti
+
+Besides the requesite hashtags tying Bob Fioretti with the Mayoral
+election, there are at least a couple of hastags connecting Toni
+Preckwinkle with Ed Burke.
+
+```{r echo=FALSE}
+plot(bob_hash)
+```
+
+### John Kozlar
+
+John Kozlar's Twitter feed does not have many hashtags, but the hashtag
+network still ties him to being against corruption.
+
+```{r echo=FALSE}
+plot(john_hash)
+```
+
+### Neal Sales-Griffin
+
+The hashtag network of Neal Sales-Griffin has few hashtags. Apparently, 
+though, a significant number of them refer to his podcast.
+
+```{r echo=FALSE}
+plot(neal_hash)
+```
+
+### Amara Enyia
+
+Amara Enyia's hashtag network is notable for frequent references to
+people (allpeople, peoplepower, etc.).
+
+```{r echo=FALSE}
+plot(ama_hash)
+```
+
+### Susana Mendoza
+
+So far, the hashtag network of Susana Mendoza is unique among all. She 
+has seemingly tied the majority of her hashtags to the hashtag chimayor19.
+
+```{r echo=FALSE}
+plot(sue_hash)
+```
+
+
+### Willie Wilson
+
+To a large extent, Willie Wilson's hashtags center on the election and 
+his desire to be elected. However, there are also more than a few of
+religious themed hashtags, as well as references to the Jason Van Dyke
+trial involving the killing of Laquan McDonald.
+
+```{r echo=FALSE}
+plot(will_hash)
+```
+
+### Jerry Joyce
+
+Jerry Joyce also seems to have a number of hashtags connected to a central
+theme: electing Jerry Joyce as mayor. There are also a few instances of 
+hastags referring to the Chicago Bears of the NFL.
+
+```{r echo=FALSE}
+plot(jerry_hash)
+```
+
+### La Shawn K Ford
+
+Most of the hashtags in this network center on the election and the candidate.
+The presence of several transit related hastags is unique among the other
+networks.
+
+```{r echo=FALSE}
+plot(lashawn_hash)
+```
+
+### Bill Daley
+
+Beyond hashtags, there really isn't much to work with in Bill Daley's Hashtag Network.
+
+```{r echo=FALSE}
+plot(bill_hash)
+```
+
+
+
+
+### Lori Lightfoot
+
+The network of Lori Lightfoot support her asertations as being progressive, 
+with references to a universal basic income, housing concerns, the LGBTQ 
+community, and her possible stance on the TIF's.
+
+```{r echo=FALSE}
+plot(lori_hash)
+```
+
+### Garry McCarthy
+
+Garry McCarthy's network is unique due to a number of references to the 
+present Mayor, Rahm Emanuel.
+
+```{r echo=FALSE}
+plot(garry_hash)
+```
+
+### Gery Chico
+
+The network of Gery Chico is comparable to the others in the campaign. However,
+there are several hashtags referring to the rights of the disabled.
+
+```{r echo=FALSE}
+plot(gery_hash)
+```
+
+### Toni Preckwinkle
+
+In addition to the LGBTQ community and housing, the hastag network of Toni Preckwinkle 
+is singular in its references to the "blue wave" elections of 2018.
+
+```{r echo=FALSE}
+plot(toni_hash)
+```
+
+### Paul Vallas
+
+Besides encouraging people to vote, Paul Vallas' network is notable for its focus
+on commerce, budgeting, and public safety.  
+
+```{r echo=FALSE}
+plot(paul_hash)
+```
+

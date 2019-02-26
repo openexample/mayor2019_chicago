@@ -1,0 +1,43 @@
+# Candidate Correlation
+
+In this section, we will examine how similar are the terms that the candidates use. With the pairwise_cor() function from the widyr package, we can compare the words that the candidates
+use, as well as their frequency of use. To do this, we will use the code below to create a correlation matrix, comparing each candidate. We’ll also add coefficients of 1 to compare candidates to themselves.
+
+```{r messages=FALSE, warning = FALSE}
+cleaned_text <- on_campaign %>% filter(!is_retweet) %>%
+mutate(text = str_remove_all(text,remove_reg)) %>% mutate(text = rm_twitter_url(text)) %>% mutate(text = rm_hash(text)) %>% unnest_tokens(word,text) %>% filter(!word %in% stop_words$word) %>% filter(!word %in% my_stopwords$word)
+cleaned_text2 <- cleaned_text[!grepl("toni|preckwinkle|paul|vallas|gery|chico|garry|mccarthy|lori|lightfoot|bill|daley|amara|enyia|bob|fioretti|jerry|joyce|la|shawn|ford|neal|sales-griffin|dr|willie|wilson|john|kozlar",cleaned_text$word),]
+words_to_candidate <- cleaned_text2 %>% count(candidate_name,word,sort=T) %>% ungroup()
+message_cors <- words_to_candidate %>% pairwise_cor(candidate_name,word,n,sort=T)
+name1 <- unique(as.character(mayor$candidate_name))
+name2 <- unique(as.character(mayor$candidate_name))
+self_score <- as.numeric(rep(1,14))
+self_score_result <- data.frame(cbind(name1,name2,self_score),stringsAsFactors=F)
+names(self_score_result) <- c('item1','item2','correlation')
+self_score_result$correlation <- as.numeric(self_score_result$correlation)
+message_cors2 <- bind_rows(message_cors,self_score_result)
+candidate_matrix <- xtabs(correlation~.,message_cors2)
+candidate_matrix2 <- as.matrix.xtabs(candidate_matrix)
+```
+
+Below are a few rows of the correlations among the candidates, with regard to the terms used and 
+their frequency of use
+
+```{r include = FALSE}
+dfcorr <- message_cors2[1:6,]
+```
+```{r echo=FALSE, warning = FALSE}
+kable(dfcorr) %>% kable_styling(bootstrap_options = 'striped',full_width=F)
+```
+
+
+Once the matrix is built, we can use the corrplot() function to visually represent the correlations.
+
+```{r echo=FALSE, warning = FALSE}
+corrplot(candidate_matrix2,order='hclust',cl.lim=c(0,1),col = rep(rev(brewer.pal(n=8,name='PuOr')),2),tl.col='black')
+```
+
+Our results show that there is a definite core group of candidates who highly correlate with each other. You've probably also noted that none of the candidates negatively correlate with each other.
+Since all of them are campaigning for the same position, within the same city, responding to 
+similar issues, you would expect a certain similarity among the candidates. Still, there are notable
+differences among them.

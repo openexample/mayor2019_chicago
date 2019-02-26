@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 4 Hashtag Networks | Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates</title>
+  <meta name="description" content="Visualizing how the 2019 Chicago Mayoral Candidates used Twitter during their campaigns.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 4 Hashtag Networks | Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Visualizing how the 2019 Chicago Mayoral Candidates used Twitter during their campaigns." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Hashtag Networks | Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates" />
+  
+  <meta name="twitter:description" content="Visualizing how the 2019 Chicago Mayoral Candidates used Twitter during their campaigns." />
+  
+
+<meta name="author" content="Pierre Phanor">
+
+
+<meta name="date" content="2019-02-25">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="word-networks.html">
+<link rel="next" href="word-associations.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Candidates</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.1</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#candidates-covered"><i class="fa fa-check"></i><b>1.2</b> Candidates Covered</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#code-examples"><i class="fa fa-check"></i><b>1.3</b> Code Examples</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>1.4</b> Outline</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#data-acquisition"><i class="fa fa-check"></i><b>1.5</b> Data Acquisition</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="general-statistics.html"><a href="general-statistics.html"><i class="fa fa-check"></i><b>2</b> General Statistics</a><ul>
+<li class="chapter" data-level="2.1" data-path="general-statistics.html"><a href="general-statistics.html#twitter-activity"><i class="fa fa-check"></i><b>2.1</b> Twitter Activity</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="word-networks.html"><a href="word-networks.html"><i class="fa fa-check"></i><b>3</b> Word Networks</a><ul>
+<li class="chapter" data-level="3.1" data-path="word-networks.html"><a href="word-networks.html#process-and-code"><i class="fa fa-check"></i><b>3.1</b> Process and Code</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="word-networks.html"><a href="word-networks.html#bob-fioretti"><i class="fa fa-check"></i><b>3.1.1</b> Bob Fioretti</a></li>
+<li class="chapter" data-level="3.1.2" data-path="word-networks.html"><a href="word-networks.html#susana-mendoza"><i class="fa fa-check"></i><b>3.1.2</b> Susana Mendoza</a></li>
+<li class="chapter" data-level="3.1.3" data-path="word-networks.html"><a href="word-networks.html#john-kozlar"><i class="fa fa-check"></i><b>3.1.3</b> John Kozlar</a></li>
+<li class="chapter" data-level="3.1.4" data-path="word-networks.html"><a href="word-networks.html#neal-sales-griffin"><i class="fa fa-check"></i><b>3.1.4</b> Neal Sales-Griffin</a></li>
+<li class="chapter" data-level="3.1.5" data-path="word-networks.html"><a href="word-networks.html#amaya-enyia"><i class="fa fa-check"></i><b>3.1.5</b> Amaya Enyia</a></li>
+<li class="chapter" data-level="3.1.6" data-path="word-networks.html"><a href="word-networks.html#willie-wilson"><i class="fa fa-check"></i><b>3.1.6</b> Willie Wilson</a></li>
+<li class="chapter" data-level="3.1.7" data-path="word-networks.html"><a href="word-networks.html#jerry-joyce"><i class="fa fa-check"></i><b>3.1.7</b> Jerry Joyce</a></li>
+<li class="chapter" data-level="3.1.8" data-path="word-networks.html"><a href="word-networks.html#la-shawn-k-ford"><i class="fa fa-check"></i><b>3.1.8</b> La Shawn K Ford</a></li>
+<li class="chapter" data-level="3.1.9" data-path="word-networks.html"><a href="word-networks.html#bill-daley"><i class="fa fa-check"></i><b>3.1.9</b> Bill Daley</a></li>
+<li class="chapter" data-level="3.1.10" data-path="word-networks.html"><a href="word-networks.html#lori-lightfoot"><i class="fa fa-check"></i><b>3.1.10</b> Lori Lightfoot</a></li>
+<li class="chapter" data-level="3.1.11" data-path="word-networks.html"><a href="word-networks.html#garry-mccarthy"><i class="fa fa-check"></i><b>3.1.11</b> Garry McCarthy</a></li>
+<li class="chapter" data-level="3.1.12" data-path="word-networks.html"><a href="word-networks.html#gery-chico"><i class="fa fa-check"></i><b>3.1.12</b> Gery Chico</a></li>
+<li class="chapter" data-level="3.1.13" data-path="word-networks.html"><a href="word-networks.html#toni-preckwinkle"><i class="fa fa-check"></i><b>3.1.13</b> Toni Preckwinkle</a></li>
+<li class="chapter" data-level="3.1.14" data-path="word-networks.html"><a href="word-networks.html#paul-vallas"><i class="fa fa-check"></i><b>3.1.14</b> Paul Vallas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="hashtag-networks.html"><a href="hashtag-networks.html"><i class="fa fa-check"></i><b>4</b> Hashtag Networks</a><ul>
+<li class="chapter" data-level="4.1" data-path="hashtag-networks.html"><a href="hashtag-networks.html#process-and-code-1"><i class="fa fa-check"></i><b>4.1</b> Process and Code</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="hashtag-networks.html"><a href="hashtag-networks.html#bob-fioretti-1"><i class="fa fa-check"></i><b>4.1.1</b> Bob Fioretti</a></li>
+<li class="chapter" data-level="4.1.2" data-path="hashtag-networks.html"><a href="hashtag-networks.html#john-kozlar-1"><i class="fa fa-check"></i><b>4.1.2</b> John Kozlar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="hashtag-networks.html"><a href="hashtag-networks.html#neal-sales-griffin-1"><i class="fa fa-check"></i><b>4.1.3</b> Neal Sales-Griffin</a></li>
+<li class="chapter" data-level="4.1.4" data-path="hashtag-networks.html"><a href="hashtag-networks.html#amara-enyia"><i class="fa fa-check"></i><b>4.1.4</b> Amara Enyia</a></li>
+<li class="chapter" data-level="4.1.5" data-path="hashtag-networks.html"><a href="hashtag-networks.html#susana-mendoza-1"><i class="fa fa-check"></i><b>4.1.5</b> Susana Mendoza</a></li>
+<li class="chapter" data-level="4.1.6" data-path="hashtag-networks.html"><a href="hashtag-networks.html#willie-wilson-1"><i class="fa fa-check"></i><b>4.1.6</b> Willie Wilson</a></li>
+<li class="chapter" data-level="4.1.7" data-path="hashtag-networks.html"><a href="hashtag-networks.html#jerry-joyce-1"><i class="fa fa-check"></i><b>4.1.7</b> Jerry Joyce</a></li>
+<li class="chapter" data-level="4.1.8" data-path="hashtag-networks.html"><a href="hashtag-networks.html#la-shawn-k-ford-1"><i class="fa fa-check"></i><b>4.1.8</b> La Shawn K Ford</a></li>
+<li class="chapter" data-level="4.1.9" data-path="hashtag-networks.html"><a href="hashtag-networks.html#bill-daley-1"><i class="fa fa-check"></i><b>4.1.9</b> Bill Daley</a></li>
+<li class="chapter" data-level="4.1.10" data-path="hashtag-networks.html"><a href="hashtag-networks.html#lori-lightfoot-1"><i class="fa fa-check"></i><b>4.1.10</b> Lori Lightfoot</a></li>
+<li class="chapter" data-level="4.1.11" data-path="hashtag-networks.html"><a href="hashtag-networks.html#garry-mccarthy-1"><i class="fa fa-check"></i><b>4.1.11</b> Garry McCarthy</a></li>
+<li class="chapter" data-level="4.1.12" data-path="hashtag-networks.html"><a href="hashtag-networks.html#gery-chico-1"><i class="fa fa-check"></i><b>4.1.12</b> Gery Chico</a></li>
+<li class="chapter" data-level="4.1.13" data-path="hashtag-networks.html"><a href="hashtag-networks.html#toni-preckwinkle-1"><i class="fa fa-check"></i><b>4.1.13</b> Toni Preckwinkle</a></li>
+<li class="chapter" data-level="4.1.14" data-path="hashtag-networks.html"><a href="hashtag-networks.html#paul-vallas-1"><i class="fa fa-check"></i><b>4.1.14</b> Paul Vallas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="word-associations.html"><a href="word-associations.html"><i class="fa fa-check"></i><b>5</b> Word Associations</a><ul>
+<li class="chapter" data-level="5.1" data-path="word-associations.html"><a href="word-associations.html#process"><i class="fa fa-check"></i><b>5.1</b> Process</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="candidate-correlation.html"><a href="candidate-correlation.html"><i class="fa fa-check"></i><b>6</b> Candidate Correlation</a></li>
+<li class="chapter" data-level="7" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>7</b> Sentiment Analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#how-we-will-measure-sentiment"><i class="fa fa-check"></i><b>7.1</b> How we will measure sentiment</a></li>
+<li class="chapter" data-level="7.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#average-term-score-by-candidate"><i class="fa fa-check"></i><b>7.2</b> Average term score by candidate</a></li>
+<li class="chapter" data-level="7.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#highest-contributions-to-sentiment"><i class="fa fa-check"></i><b>7.3</b> Highest Contributions to Sentiment</a></li>
+<li class="chapter" data-level="7.4" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#top-contributions-to-sentiment-by-candidate"><i class="fa fa-check"></i><b>7.4</b> Top Contributions to Sentiment by Candidate</a></li>
+<li class="chapter" data-level="7.5" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#highest-and-lowest-average-scoring-tweets"><i class="fa fa-check"></i><b>7.5</b> Highest (and Lowest) Average Scoring Tweets</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="hashtag-networks" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Hashtag Networks</h1>
+<p>The use of hashtags also help in forming a narrative and clarifying a stance taken in a campaign. In this section, we will take a look at how each of the candidates use hashtags to communicate with potential voters.</p>
+<div id="process-and-code-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Process and Code</h2>
+<p>In the dataset from Twitter, hashtags are recorded in a seperate variable, as well as being part of the text. The hashtags from each tweet are taken from this variable, and a similar procedure to the processing of word networks is used to build networks of co-occuring hashtags. However, a hashtag would only have to appear at least twice to be used.</p>
+<div id="bob-fioretti-1" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Bob Fioretti</h3>
+<p>Besides the requesite hashtags tying Bob Fioretti with the Mayoral election, there are at least a couple of hastags connecting Toni Preckwinkle with Ed Burke.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="john-kozlar-1" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> John Kozlar</h3>
+<p>John Kozlar’s Twitter feed does not have many hashtags, but the hashtag network still ties him to being against corruption.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+<div id="neal-sales-griffin-1" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Neal Sales-Griffin</h3>
+<p>The hashtag network of Neal Sales-Griffin has few hashtags. Apparently, though, a significant number of them refer to his podcast.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+</div>
+<div id="amara-enyia" class="section level3">
+<h3><span class="header-section-number">4.1.4</span> Amara Enyia</h3>
+<p>Amara Enyia’s hashtag network is notable for frequent references to people (allpeople, peoplepower, etc.).</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+<div id="susana-mendoza-1" class="section level3">
+<h3><span class="header-section-number">4.1.5</span> Susana Mendoza</h3>
+<p>So far, the hashtag network of Susana Mendoza is unique among all. She has seemingly tied the majority of her hashtags to the hashtag chimayor19.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+</div>
+<div id="willie-wilson-1" class="section level3">
+<h3><span class="header-section-number">4.1.6</span> Willie Wilson</h3>
+<p>To a large extent, Willie Wilson’s hashtags center on the election and his desire to be elected. However, there are also more than a few of religious themed hashtags, as well as references to the Jason Van Dyke trial involving the killing of Laquan McDonald.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+<div id="jerry-joyce-1" class="section level3">
+<h3><span class="header-section-number">4.1.7</span> Jerry Joyce</h3>
+<p>Jerry Joyce also seems to have a number of hashtags connected to a central theme: electing Jerry Joyce as mayor. There are also a few instances of hastags referring to the Chicago Bears of the NFL.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+</div>
+<div id="la-shawn-k-ford-1" class="section level3">
+<h3><span class="header-section-number">4.1.8</span> La Shawn K Ford</h3>
+<p>Most of the hashtags in this network center on the election and the candidate. The presence of several transit related hastags is unique among the other networks.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</div>
+<div id="bill-daley-1" class="section level3">
+<h3><span class="header-section-number">4.1.9</span> Bill Daley</h3>
+<p>Beyond hashtags, there really isn’t much to work with in Bill Daley’s Hashtag Network.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="lori-lightfoot-1" class="section level3">
+<h3><span class="header-section-number">4.1.10</span> Lori Lightfoot</h3>
+<p>The network of Lori Lightfoot support her asertations as being progressive, with references to a universal basic income, housing concerns, the LGBTQ community, and her possible stance on the TIF’s.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+</div>
+<div id="garry-mccarthy-1" class="section level3">
+<h3><span class="header-section-number">4.1.11</span> Garry McCarthy</h3>
+<p>Garry McCarthy’s network is unique due to a number of references to the present Mayor, Rahm Emanuel.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+</div>
+<div id="gery-chico-1" class="section level3">
+<h3><span class="header-section-number">4.1.12</span> Gery Chico</h3>
+<p>The network of Gery Chico is comparable to the others in the campaign. However, there are several hashtags referring to the rights of the disabled.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+</div>
+<div id="toni-preckwinkle-1" class="section level3">
+<h3><span class="header-section-number">4.1.13</span> Toni Preckwinkle</h3>
+<p>In addition to the LGBTQ community and housing, the hastag network of Toni Preckwinkle is singular in its references to the “blue wave” elections of 2018.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+</div>
+<div id="paul-vallas-1" class="section level3">
+<h3><span class="header-section-number">4.1.14</span> Paul Vallas</h3>
+<p>Besides encouraging people to vote, Paul Vallas’ network is notable for its focus on commerce, budgeting, and public safety.</p>
+<p><img src="bookdown-start_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="word-networks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="word-associations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

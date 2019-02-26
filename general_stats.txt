@@ -1,0 +1,20 @@
+Before we delve into the specifics of each candidate, let’s take a look at the activity of each candidate on Twitter for each month in their campaign.
+
+Below, you will see a graph outlining the number of Twitter messages for each candidate since their announcement. Lori Lightfoot leads all the candidates with over a thousand messages, followed by Garry McCarthy and Amara Enyia. Please note that the totals below represent retweets as well as messages from each of the campaigns represented. For some candidates, such as Susana Mendoza and Bob Fioretti, low numbers here may represent the recent dates of their announcements. However, John Kozlar announced in May of 2018 and he has the fewest posts.
+
+[insert number of Twitter posts for each candidate]
+
+
+We can also look at the number of posts by each candidate on a monthly basis.
+
+
+[insert Twitter posts for each candidate by month]
+
+As stated earlier, data for each candidate were selected for study from each person’s announcement date until the day the data were downloaded, January 31, 2019. As time went on in each campaign, most candidates increased their number of posts per month. One notable exception is Neal Sales-Griffin, with a dwindling presence on Twitter since the summer. Another observation is John Kozlar’s sudden activity since the month of January. 
+
+Finally, we can look at the average number of Twitter posts per campaign day.
+
+[insert Average Number of Twitter posts per day by candidate]
+
+Amaya Enyia’s activity for January places her first in this category, averaging nearly two more posts than the next candidate. The averages for Bob Fioretti and Susana Mendoza show that, despite their late announcement dates, they have every intention to engage the public via Twitter. On the other hand, In contrast, Neal Sales-Griffin is now averaging only a message per campaign day. Not to be outdone, John Kozlar averages less than half a message per day.
+

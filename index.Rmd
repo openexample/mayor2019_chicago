@@ -1,0 +1,99 @@
+--- 
+title: "Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates"
+author: "Pierre Phanor"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: 
+biblio-style: apalike
+link-citations: yes
+github-repo:
+description: "Visualizing how the 2019 Chicago Mayoral Candidates used Twitter during their campaigns."
+---
+
+# Preface
+
+The 2019 Chicago Mayoral Election is scheduled to take place on 
+February 26. On that day, residents will be making decisions
+on the people who will lead the city and chart its course in the face of issues 
+such as Crime, Pension Obligations, and Affordable Housing. The goal
+of this project is to analyze how the candidates communicate to Chicago's
+residents through Twitter and, hopefully, gleam some insight into
+each candidate's vision for the city.
+
+## Acknowledgements
+
+Simply put, I would not have been motivated to do this project
+without the book *Text Mining with R*, written by Julia Silge and 
+David Robinson, and their tidytext package. Most of the techniques 
+used in this document are from the book. Text Mining with R serves
+as a insightful and concise entry into Natural Language Processing.
+
+Along with the tidytext package, I should take this time to recognize
+the other packages used in the document.
+
+* tidyverse
+* lubridate
+* igraph
+* ggraph
+* widyr
+* qdapRegex
+* corrplot
+* RColorBrewer
+* gridExtra
+* DescTools
+* tm
+
+## Candidates Covered
+
+Below is a table of the candidates for Chicago City Mayor as of January 
+31, 2019. Included with their names are their present or previous positions.
+
+```{r include=FALSE}
+dtcand <- data.frame(Candidate=c('Bob Fioretti','La Shawn K Ford','Susana Mendoza','Toni Preckwinkle','Gery Chico','Bill Daley','Lori Lightfoot','Garry McCarthy','Paul Vallas','Amara Enyia','Jerry Joyce','John Kozlar','Neal Sales-Griffin','Willie Wilson'),Background=c('Former Alderman','State Representative','Illinois Comptroller','Cook County Board President','Former Chicago Public Schools President','Former U.S. Commerce Secretary','Former Chicago Police Board President','Former Chicago Police Superintendent','Former Chicago Public Schools CED','Director of Austin Chamber of Commerce','Lawyer','Lawyer','Tech Entrepreneur','Buisnessman'),Username=c('BobFiorettiChi','FordForChi19','susanamendoza10','toniforchicago','GeryChico','DaleyForMayor','LightfootForChi','Garry4Chicago','Paulvallas','amaraforchicago','joyce4mayor','JohnKozlar','nealsales','DrWillieWilson'),Campaign_Start=c('11/26/18','10/31/18','11/14/18','9/20/18','9/20/18','9/17/18','5/10/18','5/21/18','5/2/18','8/28/18','8/29/18','5/8/18','4/21/18','3/27/18'))
+```
+```{r include = FALSE}
+kable(dtcand) %>% kable_styling(full_width=T) %>% column_spec(1,bold=T,border_right=T)
+```
+
+## Code Examples
+
+In the document, I will try to highlight some of the underlying code
+for the analysis to illustrate how the data were processed. The full 
+code for the analysis will be made available on Github, as well 
+as the datasets used.
+
+## Outline
+
+In Chapter 2, we will go over some of the basic statistics involved with
+the candidate's Twitter use. 
+
+Chapter 3 will introduce the word networks associated with each of the
+candidates. The goal of each network is to illustrate relationships of
+terms and how those relationships highlight narratives in the campaign.
+
+We'll do the same in Chapter 4, but this time with hashtags. Hashtags can
+also help convey a candidate's stance, but in a more concise and connected
+way.
+
+In Chapter 5, we will look at examples of Word Associations. Word Associations will help
+to correlate issues facing Chicago and related terms used during the campaign season.
+
+For Chapter 6, We will take a quick look to see how similar the candidates are
+with respect to the terms they use and their frequency of use.
+
+Finally, in Chapter 7 we will look perceived positive and negative sentiment
+in the messages the candidates use.
+
+## Data Acquisition
+
+The Data were acquired from Twitter through use of the Twitter Developer
+App and the rtweet package from R. By using the rtweet package, we were
+able to access the Twitter API and download, potentially, up to the last 
+3200 tweets from each candidate's Twitter feed with the get_timeline() function. 
+The collected data were, then, converted to a comma delimited file for 
+portability and easier access. Data for each candidate in the analysis covers the
+time from their announcement date until the day the data were downloaded, January 31, 2019.
+More information on Twitter Developer Apps can be found [here](https://deveolper.twitter.com).
+

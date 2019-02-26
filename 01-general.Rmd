@@ -1,0 +1,84 @@
+# General Statistics
+
+Before we delve into the specifics of each candidate, let’s take a look at the activity of each candidate on Twitter during their campaigns.
+
+## Twitter Activity
+
+Below, you will see a graph outlining the number of Twitter messages for each candidate since their announcement. Lori Lightfoot leads all the candidates with over a thousand messages, followed by Garry McCarthy and Amara Enyia. Please note that the totals below represent retweets as well as messages from each of the campaigns represented. For some candidates, such as Susana Mendoza and Bob Fioretti, low numbers here may represent the recent dates of their announcements. However, John Kozlar announced in May of 2018 and he has the fewest posts.
+
+```{r include = FALSE, message = FALSE}
+library(tidyverse)
+library(tidytext)
+library(lubridate)
+library(igraph)
+library(ggraph)
+library(widyr)
+library(qdapRegex)
+library(corrplot)
+library(RColorBrewer)
+library(gridExtra)
+library(DescTools)
+library(tm)
+# Read the data into memory
+mayor <- read.csv('jan_candidates.csv',header=T,sep=',',stringsAsFactors=F)
+mayor$created_at <- ymd_hms(mayor$created_at)
+mayor$date <- date(mayor$created_at)
+# Get the actual candidate names
+runners <- read.csv('candidate_names.csv',header=T,sep=',',stringsAsFactors=F)
+names(runners) <- c('screen_name','candidate_name')
+# Join the names to the candidate data frame
+mayor <- left_join(mayor,runners)
+
+candidate_filter <- function(data1,screen,announced){
+  # first, screen out for the individual candidate
+  candidate <- subset(data1,screen_name == screen)
+  # next, screen the set for tweets after the announcement date
+  candidate_f <- subset(candidate,date > as.Date(announced))
+  return(candidate_f)
+}
+
+paul_f <- candidate_filter(mayor,'Paulvallas','2018-05-02')
+toni_f <- candidate_filter(mayor,'toniforchicago','2018-09-20')
+gery_f <- candidate_filter(mayor,'GeryChico','2018-09-20')
+garry_f <- candidate_filter(mayor,'Garry4Chicago','2018-05-21')
+lori_f <- candidate_filter(mayor,'LightfootForChi','2018-05-10')
+bill_f <- candidate_filter(mayor,'DaleyForMayor','2018-09-17')
+lashawn_f <- candidate_filter(mayor,'FordForChi19','2018-10-31')
+jerry_f <- candidate_filter(mayor,'joyce4mayor','2018-08-29')
+will_f <- candidate_filter(mayor,'DrWillieWilson','2018-03-27')
+sue_f <- candidate_filter(mayor,'susanamendoza10','2018-11-14')
+bob_f <- candidate_filter(mayor,'BobFiorettiChi','2018-11-16')
+ama_f <- candidate_filter(mayor,'amaraforchicago','2018-08-28')
+neal_f <- candidate_filter(mayor,'nealsales','2018-04-21')
+john_f <- candidate_filter(mayor,'JohnKozlar','2018-05-08')
+
+on_campaign <- bind_rows(paul_f,toni_f,gery_f,garry_f,lori_f,bill_f,lashawn_f,jerry_f,will_f,sue_f,bob_f,ama_f,neal_f,john_f)
+```
+```{r echo=FALSE}
+on_campaign %>% group_by(candidate_name) %>% summarise(messages = n_distinct(status_id)) %>% ggplot(aes(reorder(candidate_name,messages),messages))+geom_col(color='black',fill='red')+coord_flip()+theme(axis.text.y = element_text(size=12,face='bold'))+labs(title='Number of Twitter messages since date of announcement',x="")
+```
+
+
+We can also look at the number of posts by each candidate on a monthly basis.
+
+```{r include = FALSE, message = FALSE}
+my_month <- on_campaign %>% select(candidate_name,date) %>% group_by(candidate_name,month = floor_date(date,'month')) %>% summarise(month_total = n()) %>% ggplot(aes(x=month,y=month_total,fill=candidate_name))+geom_col(show.legend=FALSE)+facet_wrap(~candidate_name,scales='free')+ylab('')+xlab('Month')+ggtitle('Twitter posts per month by candidate since declaring candidacy')
+```
+```{r echo=FALSE, fig.height=5, fig.width=8}
+plot(my_month)
+```
+
+As stated earlier, data for each candidate were selected for study from each person’s announcement date until the day the data were downloaded, January 31, 2019. As time went on in each campaign, most candidates increased their number of posts per month. One notable exception is Neal Sales-Griffin, with a dwindling presence on Twitter since the summer. Another observation is John Kozlar’s sudden activity since the month of January.
+
+Finally, we can look at the average number of Twitter posts per campaign day.
+
+```{r include = FALSE, message = FALSE}
+sent_out <- read.csv('jan_message_rate.csv',header=T,sep=',',stringsAsFactors=F)
+sent_out_plot <- sent_out %>% arrange(messages_per_day) %>% mutate(name = factor(name,levels = .$name)) %>% ggplot(aes(messages_per_day,name,label=paste0(round(messages_per_day,2))))+geom_segment(aes(x=0,y=name,xend=messages_per_day,yend=name),color='lightblue')+geom_point(color='lightblue',size=7)+geom_text(color='black',size=3)+labs(x='Average # of messages per day',y='',title='Average Number of Twitter Messages per Campaign Day by Candidate')+theme_minimal()
+```
+```{r echo=FALSE}
+plot(sent_out_plot)
+```
+
+Amaya Enyia’s activity for January places her first in this category, averaging nearly two more posts than the next candidate. The averages for Bob Fioretti and Susana Mendoza show that, despite their late announcement dates, they have every intention to engage the public via Twitter. In contrast, Neal Sales-Griffin is now averaging only a message per campaign day. Not to be outdone, John Kozlar averages less than half a message per day, though that may improve come February.
+

@@ -31,21 +31,21 @@ message_sentiments <- words_to_candidate %>% inner_join(get_sentiments('afinn'),
 ```
 ```{r include = FALSE}
 avg_sent <- message_sentiments %>% mutate(candidate_name = reorder(candidate_name,score)) %>% ggplot(aes(candidate_name,score))+
-geom_col(show.legend=F,color='black',fill='red')+coord_flip()+ylab('Average Sentiment Score per Word')+xlab('')+theme(axis.text = element_text(color='black'))
+geom_col(show.legend=F,color='black',fill='red')+coord_flip()+ylab('Average Score')+xlab('')+theme(axis.text = element_text(color='black'),axis.text.y = element_text(size=12,face='bold'))+ggtitle("Average Sentiment Score per Term")
 ```
 ```{r echo=FALSE}
 plot(avg_sent)
 ```
 
-The results show that Willie Wilson is, by far, is the most "positive", 
+The results show that Willie Wilson is the most "positive", 
 averaging a score of over one per term used. Candidate Wilson is followed 
-by John Kozlar and Paul Vallas. The least "positive" on average is Garry McCarthy.
+by John Kozlar and Neal Sales-Griffin. The least "positive" on average, by far, is Garry McCarthy.
 
 ## Highest Contributions to Sentiment
 
 At this point, you might be asking what are the words that are making these 
-messages positive or negative. The following code will extract the 25 words that, 
-from all of the timelines by their frequency of use and assigned score, are most 
+messages positive or negative. The following code will extract the 25 words 
+from all of the timelines that, by their frequency of use and assigned score, are most 
 prominent in contributions made to overall twitter message sentiment. This will 
 include both prominent positive and negative words.
 
@@ -100,9 +100,7 @@ john_i <- candidate_impact_words("John Kozlar")
 grid.arrange(ama_i,bill_i,bob_i,garry_i,gery_i,jerry_i,lashawn_i,lori_i,neal_i,paul_i,sue_i,toni_i,will_i,john_i,ncol=4)
 ```
 
-One thing to note here is that for Sales-Griffin and Kozlar, their lack of twitter activity
-during their campaign introduces a higher chance for ties. Hopefully, this will be resolved
-with the data from February. The results also give a hint as to why Willie Wilson and 
+The results give some insight as to why Willie Wilson and 
 Garry McCarthy are at the extremes in terms of average score per term.
 
 ## Highest (and Lowest) Average Scoring Tweets
@@ -118,20 +116,20 @@ my_campaign2 <- my_campaign %>% unnest_tokens(word,text) %>% filter(!word %in% s
 sentiment_messages <- my_campaign2 %>% inner_join(get_sentiments('afinn'), by = 'word') %>% group_by(candidate_name,status_id) %>% summarise(sentiment = mean(score), words = n()) %>% ungroup() %>% filter(words >= 3)
 message_pos <- sentiment_messages %>% arrange(desc(sentiment)) %>% top_n(10,sentiment)
 message_neg <- sentiment_messages %>% arrange(desc(sentiment)) %>% top_n(-10,sentiment)
-message_pos_table <- on_campaign %>% select(candidate_name,status_id,text) %>% filter(on_campaign$status_id %in% message_pos$status_id)
-message_neg_table <- on_campaign %>% select(candidate_name,status_id,text) %>% filter(on_campaign$status_id %in% message_neg$status_id)
+message_pos_table <- on_campaign %>% select(candidate_name,status_id,text) %>% filter(on_campaign$status_id %in% message_pos$status_id) %>% left_join(select(message_pos,sentiment,status_id),by="status_id")
+message_neg_table <- on_campaign %>% select(candidate_name,status_id,text) %>% filter(on_campaign$status_id %in% message_neg$status_id) %>% left_join(select(message_neg,sentiment,status_id),by="status_id")
 ```
 
 Below are the tweets with the top average sentiment scores.
 
 ```{r echo = FALSE}
-kable(message_pos_table) %>% kable_styling(full_width=F) %>% column_spec(1,bold=T) %>% 
+message_pos_table %>% select(candidate_name,status_id,text,sentiment) %>% kable() %>% kable_styling(bootstrap_options = 'striped', full_width=F) %>% column_spec(1,bold=T) %>% 
   column_spec(2,border_right=T) %>% column_spec(3,width="30em")
 ```
 
 And here are the tweets with the lowest average sentiment scores.
 
 ```{r echo = FALSE}
-kable(message_neg_table) %>% kable_styling(full_width=F) %>% column_spec(1,bold=T) %>% 
+message_neg_table %>% select(candidate_name,status_id,text,sentiment) %>% kable() %>% kable_styling(bootstrap_options = 'striped', full_width=F) %>% column_spec(1,bold=T) %>% 
   column_spec(2,border_right=T) %>% column_spec(3,width="30em")
 ```

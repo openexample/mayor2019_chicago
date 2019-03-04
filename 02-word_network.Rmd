@@ -26,7 +26,8 @@ return(big_counts)
 }
 ```
 
-The pairs, along with a count of their co-occurrence, is then filtered, only keeping pairs with co-occurrences of five or more. A graph is then constructed, using nodes to represent each word and lines (edges) to represent the number of co-occurrences. The thicker the line, the more frequent co-occurrences. Simple, right?
+The pairs, along with a count of their co-occurrence, is then filtered, only keeping pairs with co-occurrences of five or more. A graph is then constructed, using nodes to represent each word and lines (edges) to represent the number of co-occurrences. The thicker the line, the more frequent co-occurrences. Simple, right? You will notice that many of the networks can be characterized by a 
+large group of connected terms referring to a person's actual candidacy with other groups of connected terms reflecting common themes in their messages.
 
 ```{r eval = FALSE}
 candidate_network <- function(candidate_big_counts){
@@ -156,7 +157,7 @@ plot(john_net)
 
 ### Neal Sales-Griffin
 
-Sales-Griffin’s network is also sparse and mostly mentions terms related to his podcast. The only notable idea related to the campaign is collecting signatures.
+Sales-Griffin’s network is also sparse and mostly mentions terms related to his podcast. In fact, The only notable idea related to the campaign in his network is collecting signatures.
 
 ```{r echo=FALSE}
 plot(neal_net)
@@ -220,7 +221,7 @@ plot(garry_net)
 
 ### Gery Chico
 
-Gery Chico’s network is oddly sparse, referring mainly to his candidacy. In addition, references to public safety and his wife.
+Gery Chico’s network is oddly sparse, referring mainly to his candidacy. In addition, references to public safety and his wife are also made.
 
 ```{r echo=FALSE}
 plot(gery_net)

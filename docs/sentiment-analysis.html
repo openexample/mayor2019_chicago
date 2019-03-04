@@ -25,7 +25,7 @@
 <meta name="author" content="Pierre Phanor">
 
 
-<meta name="date" content="2019-02-25">
+<meta name="date" content="2019-03-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -193,11 +193,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">7.2</span> Average term score by candidate</h2>
 <p>For example, we can look at the average score for each term used by the candidates in their twitter messages during each of their campaigns. The code below with take each term used by the candidates, assign a score from the AFINN Lexicon for each term it shares in the candidate’s tweet, multiply the scores by the number of times each term is used (we’ll call this contribution to sentiment), and divides that result by the total number of terms appearing in the messages.</p>
 <p><img src="bookdown-start_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
-<p>The results show that Willie Wilson is, by far, is the most “positive”, averaging a score of over one per term used. Candidate Wilson is followed by John Kozlar and Paul Vallas. The least “positive” on average is Garry McCarthy.</p>
+<p>The results show that Willie Wilson is the most “positive”, averaging a score of over one per term used. Candidate Wilson is followed by John Kozlar and Neal Sales-Griffin. The least “positive” on average, by far, is Garry McCarthy.</p>
 </div>
 <div id="highest-contributions-to-sentiment" class="section level2">
 <h2><span class="header-section-number">7.3</span> Highest Contributions to Sentiment</h2>
-<p>At this point, you might be asking what are the words that are making these messages positive or negative. The following code will extract the 25 words that, from all of the timelines by their frequency of use and assigned score, are most prominent in contributions made to overall twitter message sentiment. This will include both prominent positive and negative words.</p>
+<p>At this point, you might be asking what are the words that are making these messages positive or negative. The following code will extract the 25 words from all of the timelines that, by their frequency of use and assigned score, are most prominent in contributions made to overall twitter message sentiment. This will include both prominent positive and negative words.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">message_contributions &lt;-<span class="st"> </span>cleaned_text2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(<span class="kw">get_sentiments</span>(<span class="st">&#39;afinn&#39;</span>),<span class="dt">by=</span><span class="st">&#39;word&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(word) <span class="op">%&gt;%</span>
 <span class="kw">summarise</span>(<span class="dt">occurences =</span> <span class="kw">n</span>(),<span class="dt">contribution =</span> <span class="kw">sum</span>(score))
 message_contributions <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="dv">25</span>,<span class="kw">abs</span>(contribution)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">word=</span><span class="kw">reorder</span>(word,contribution)) <span class="op">%&gt;%</span>
@@ -209,13 +209,13 @@ message_contributions <span class="op">%&gt;%</span><span class="st"> </span><sp
 <h2><span class="header-section-number">7.4</span> Top Contributions to Sentiment by Candidate</h2>
 <p>We can do something similar for each of the candidates. Below are the plots for each candidate indicating the top twelve words for their timelines by their contribution to sentiment (again, score times number of times used). If there are ties in contribution, all tied words are used.</p>
 <p><img src="bookdown-start_files/figure-html/unnamed-chunk-56-1.png" width="912" /></p>
-<p>One thing to note here is that for Sales-Griffin and Kozlar, their lack of twitter activity during their campaign introduces a higher chance for ties. Hopefully, this will be resolved with the data from February. The results also give a hint as to why Willie Wilson and Garry McCarthy are at the extremes in terms of average score per term.</p>
+<p>The results give some insight as to why Willie Wilson and Garry McCarthy are at the extremes in terms of average score per term.</p>
 </div>
 <div id="highest-and-lowest-average-scoring-tweets" class="section level2">
 <h2><span class="header-section-number">7.5</span> Highest (and Lowest) Average Scoring Tweets</h2>
 <p>Besides looking at individual words, we can assess the average sentiment score for a given tweet. In the code below, we can ascertain the average score per term tweet for each tweet in the dataset. We’ll try to take the top scoring tweets, as well as the lowest scoring tweets. <strong>In a later version of this document, I plan to include average scores with the tweets</strong>.</p>
 <p>Below are the tweets with the top average sentiment scores.</p>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -227,6 +227,9 @@ status_id
 <th style="text-align:left;">
 text
 </th>
+<th style="text-align:right;">
+sentiment
+</th>
 </tr>
 </thead>
 <tbody>
@@ -235,10 +238,13 @@ text
 Paul Vallas
 </td>
 <td style="text-align:left;border-right:1px solid;">
-x1077629743841857538
+x1100437063219007488
 </td>
 <td style="text-align:left;width: 30em; ">
-#TeamVallas &amp;amp; I wish you and yours health and happiness this Christmas. We are grateful for all who have given their time, talent, and resources to the #VallasforAllChicago campaign. We wish you a beautiful holiday, happy New Year, and joyful season. #ChristmasDay2018
+#TeamVallas is amazing! We have our fantastic volunteers all over the city delivering the message of the campaign. Thank you to our amazing volunteers for all you do! #VallasforMayor #VallasforAllChicago #PaulforAll #VallasPlans <a href="https://t.co/WeQ1zRUt27" class="uri">https://t.co/WeQ1zRUt27</a>
+</td>
+<td style="text-align:right;">
+4.000000
 </td>
 </tr>
 <tr>
@@ -251,6 +257,9 @@ x1071987410509156352
 <td style="text-align:left;width: 30em; ">
 Fantastic game today! Proud of #DaBears for a great game tonight and excited to face the <span class="citation">@packers</span> next week and bring #Chicago another win! #BearDown #LARvsCHI #Bears <span class="citation">@ChicagoBears</span> #SundayNightFootball
 </td>
+<td style="text-align:right;">
+3.250000
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -262,16 +271,8 @@ x1069697002949222400
 <td style="text-align:left;width: 30em; ">
 Happy 200th birthday to our wonderful home state, #llinois! From fields of agriculture, cities lining our rivers and great lakes, &amp;amp; rolling bluffs &amp;amp; fantastic people, we are proud to be the Land of Lincoln and one with everyone in our great state. #IllinoisProud #Illinois200
 </td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Paul Vallas
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1064975785352708097
-</td>
-<td style="text-align:left;width: 30em; ">
-“It’s a sign of the grassroots support that we have that we think is going to put us over the finish line.” Thank you to our amazing #TeamVallas volunteers for making this possible, I am grateful for the hours of petitioning you’ve given to this campaign. <a href="https://t.co/ACT3EwzA5U" class="uri">https://t.co/ACT3EwzA5U</a>
+<td style="text-align:right;">
+3.250000
 </td>
 </tr>
 <tr>
@@ -284,6 +285,9 @@ x1058099823977684994
 <td style="text-align:left;width: 30em; ">
 #NationalAuthorsDay is a wonderful day in Chicago to celebrate the fantastic works of our city’s writers such as Sandra Cisneros, Gwendolyn Brooks, Carl Sandburg, &amp;amp; Ernest Hemingway, among other spectacular poets &amp;amp; writers from Chicago. (1/2)
 </td>
+<td style="text-align:right;">
+3.666667
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -295,27 +299,36 @@ x1031330824543760384
 <td style="text-align:left;width: 30em; ">
 I spent last night having a great time at the Pakistani Independence Day Festival. I was delighted to meet, speak, and celebrate with Chicago’s Pakistani-American community. Thank you to everyone for organizing a wonderful event yesterday evening. <a href="https://t.co/Domoa3hM3c" class="uri">https://t.co/Domoa3hM3c</a>
 </td>
+<td style="text-align:right;">
+3.333333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Toni Preckwinkle
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1098628667398385665
+</td>
+<td style="text-align:left;width: 30em; ">
+Tina Tchen will be Standing with Toni this weekend! We’re thrilled to have the support of so many wonderful and accomplished women! If you haven’t RSVP’s yet there’s still time, Sign up with a friend today! <a href="https://t.co/oTM4E9Klp8" class="uri">https://t.co/oTM4E9Klp8</a> #ChiMayor19 #VoteHerIn <a href="https://t.co/905LKrhic2" class="uri">https://t.co/905LKrhic2</a>
+</td>
+<td style="text-align:right;">
+3.250000
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Gery Chico
 </td>
 <td style="text-align:left;border-right:1px solid;">
-x1087444162725793793
+x1096833767648514048
 </td>
 <td style="text-align:left;width: 30em; ">
-Thanks to <span class="citation">@RPCoalition</span> for hosting such a wonderful and inspiring breakfast this morning. I enjoyed meeting those who attended and honoring Martin Luther King Jr. #ChicoforMayor #ChiMayor2019 #MLKDay <a href="https://t.co/Hsb0q7L7d7" class="uri">https://t.co/Hsb0q7L7d7</a>
+What a fun visit with the folks at Senior Suites at Norwood Park. We reminisced about the good ole days &amp;amp; what we love most about Chicago. Even met a lovely couple who have been married for 68 years! They early voted for me. Grateful to meet so many wonderful people! #ChiMayor19 <a href="https://t.co/2eTjFWEou5" class="uri">https://t.co/2eTjFWEou5</a>
 </td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Gery Chico
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1071894681481592833
-</td>
-<td style="text-align:left;width: 30em; ">
-What a fun time at the South Chicago YMCA Christmas Dinner Dance! We met so many supporters and friends. Fantastic music, atmosphere and most importantly - beautiful people! <a href="https://t.co/txUieY3Yzw" class="uri">https://t.co/txUieY3Yzw</a>
+<td style="text-align:right;">
+3.400000
 </td>
 </tr>
 <tr>
@@ -328,49 +341,8 @@ x1045499670301212674
 <td style="text-align:left;width: 30em; ">
 Happy to celebrate with the 20 Most Inspiring Chicagoans at the annual <span class="citation">@StreetWise_CHI</span> Gala. An amazing night of celebration which reminds us all that we must do more to help each other. <a href="https://t.co/mlkrtXhrN9" class="uri">https://t.co/mlkrtXhrN9</a>
 </td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Lori Lightfoot
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1031167694480056323
-</td>
-<td style="text-align:left;width: 30em; ">
-Celebrated fun, peace, and community pride at the 56th Annual Englewood Back to School Parade yesterday. <a href="https://t.co/KdKBHv5Amx" class="uri">https://t.co/KdKBHv5Amx</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Lori Lightfoot
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x998671355229999104
-</td>
-<td style="text-align:left;width: 30em; ">
-Thrilled to celebrate my friend, the incredible visual artist Nick Cave, awarded the Creative Voice award at today’s <span class="citation">@ArtsAllianceIL</span> benefit lunch. <a href="https://t.co/fcsIjrmiXl" class="uri">https://t.co/fcsIjrmiXl</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Bill Daley
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1080228350197747712
-</td>
-<td style="text-align:left;width: 30em; ">
-May your 2019 be filled with lots of happiness, health, luck and love. Let’s make this the best year for Chicago yet!
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Willie Wilson
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1078900336897810433
-</td>
-<td style="text-align:left;width: 30em; ">
-Celebrating <span class="citation">@kwanzaa</span> at <span class="citation">@MX_College</span>. Today we celebrate Ujima (Collective Work &amp;amp; Responsibility). A quality that fits perfectly with our campaign: that inclusion is the key and together is the way! Happy Kwanzaa! #ThePeoplesMayor #ALLIN #ChiMayor19 #ChicagoElection <a href="https://t.co/ZKwQ4QhEuY" class="uri">https://t.co/ZKwQ4QhEuY</a>
+<td style="text-align:right;">
+3.250000
 </td>
 </tr>
 <tr>
@@ -383,6 +355,9 @@ x1076260175911313409
 <td style="text-align:left;width: 30em; ">
 Receiving holiday joy from the students at Fuller School of Excellence today. Thank you for your invitation! Teachers doing an EXCELLENT job with the children who are our future! Keep up the amazing work! #ThePeoplesMayor #ALLIN <a href="https://t.co/pUU0KsJiID" class="uri">https://t.co/pUU0KsJiID</a>
 </td>
+<td style="text-align:right;">
+3.250000
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -394,27 +369,8 @@ x1065004103074484224
 <td style="text-align:left;width: 30em; ">
 Iglesia Luterana de la Trinidad <span class="citation">@TrinidadLutheranChurch</span> for Bingo Tuesdays…fun raffle with <span class="citation">@RayRubio</span>…a few lucky winners will be draped in our OFFICIAL campaign gear! Congratulations! FUN in Humboldt Park! #ThePeoplesMayor #ChiMayor19 #ALLIN <a href="https://t.co/nJTbO6dH7B" class="uri">https://t.co/nJTbO6dH7B</a>
 </td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Willie Wilson
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1043676348705918976
-</td>
-<td style="text-align:left;width: 30em; ">
-Taking part in Anniversary Celebration <span class="citation">@MBIsraelHouseofPrayerChicago</span> and Rev. Dr. Swaraj Kumar Perumalla. What a beautiful night! Congrats to my Christian brothers &amp;amp; sisters. Keep lifting Him up! We will win for all the right reasons #ChiMayor19 #Chicago #williewilsonformayor <a href="https://t.co/UBOzCDj3nx" class="uri">https://t.co/UBOzCDj3nx</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Willie Wilson
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1041117037219725312
-</td>
-<td style="text-align:left;width: 30em; ">
-Celebrating <span class="citation">@ElGritoChicago</span> <span class="citation">@Millennium_Park</span> Downtown #Chicago with the beautiful Mariachi Choir on a picture perfect sunny afternoon hosted by <span class="citation">@MariachiHeritageFoundation</span> #ALLIN #WontStop #williewilsonformayor #williewilson <a href="https://t.co/eiAy8mZf3H" class="uri">https://t.co/eiAy8mZf3H</a>
+<td style="text-align:right;">
+3.250000
 </td>
 </tr>
 <tr>
@@ -422,60 +378,19 @@ Celebrating <span class="citation">@ElGritoChicago</span> <span class="citation"
 Susana Mendoza
 </td>
 <td style="text-align:left;border-right:1px solid;">
-x1082394161461018627
+x1097267096680042499
 </td>
 <td style="text-align:left;width: 30em; ">
-I am so thrilled to be endorsed by the working men and women of <span class="citation">@LiUNAchicago</span>. Throughout my career, I’ve been proud to stand shoulder-to-shoulder with our working families, and that will continue when I’m mayor. (1/2) #ChiMayor19
+AWESOME is an understatement! The food and stellar customer service at <span class="citation">@5loaveseatery</span> on the Southside was sooooooo great! Loved every minute of my visit! If you love great soul food, you gotta check this little gem out! #ChiMayor19 <a href="https://t.co/hKYpz7Fcao" class="uri">https://t.co/hKYpz7Fcao</a>
 </td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Susana Mendoza
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1079980626441310209
-</td>
-<td style="text-align:left;width: 30em; ">
-As we turn our eyes to 2019 make sure to take your loved ones in your arms and hold them close. I am blessed to be able to spend New Years with my family. May your 2019 be filled with love, joy, and happiness. 🎇 #HappyNewYear 🎆 <a href="https://t.co/wf8kSBrf2D" class="uri">https://t.co/wf8kSBrf2D</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Susana Mendoza
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1078056230403391488
-</td>
-<td style="text-align:left;width: 30em; ">
-Happy first night of Kwanzaa to all those celebrating. For the next seven days may you and your family be filled with love and happiness. #HappyKwanzaa
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Susana Mendoza
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1077659805223976961
-</td>
-<td style="text-align:left;width: 30em; ">
-I am blessed to spend the holiday season this year with my family and the people I love. Merry Christmas and Happy Holidays! #twill 🎄 <a href="https://t.co/QRpt7CPOd0" class="uri">https://t.co/QRpt7CPOd0</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-Bob Fioretti
-</td>
-<td style="text-align:left;border-right:1px solid;">
-x1079984707339718658
-</td>
-<td style="text-align:left;width: 30em; ">
-Happy New Year. May it be a happy and prosperous #2019 #WhatsGreatAboutChicago <a href="https://t.co/ejZ0fVMJMj" class="uri">https://t.co/ejZ0fVMJMj</a>
+<td style="text-align:right;">
+3.333333
 </td>
 </tr>
 </tbody>
 </table>
 <p>And here are the tweets with the lowest average sentiment scores.</p>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -486,6 +401,9 @@ status_id
 </th>
 <th style="text-align:left;">
 text
+</th>
+<th style="text-align:right;">
+sentiment
 </th>
 </tr>
 </thead>
@@ -500,6 +418,23 @@ x1075052807085010945
 <td style="text-align:left;width: 30em; ">
 I met &amp;amp; spoke w/residents of the #HumboldtPark community about violence prevention &amp;amp; the core issues of violence in #Chicago in my latest violence prevention #townhall. Thank you to the organizers &amp;amp; people who attended &amp;amp; watched online. (1/2) <a href="https://t.co/QdICW7r4E1" class="uri">https://t.co/QdICW7r4E1</a>
 </td>
+<td style="text-align:right;">
+-3.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Toni Preckwinkle
+</td>
+<td style="text-align:left;border-right:1px solid;">
+x1093260626611372033
+</td>
+<td style="text-align:left;width: 30em; ">
+I am the only candidate with a plan to #raisethewage. If no action is taken, Chicago workers will have lost 40% of their buying power over the next 5 years due to cost of living. That’s not just bad for workers, it’s bad for business. <a href="https://t.co/mrPYey8SpK" class="uri">https://t.co/mrPYey8SpK</a>
+</td>
+<td style="text-align:right;">
+-3.00
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -510,6 +445,9 @@ x1090335728175845377
 </td>
 <td style="text-align:left;width: 30em; ">
 Sadden to hear about the recent hate crime against Empire actor, Jussie Smollett. This act has no place in Chicago and we can not tolerate such hate.
+</td>
+<td style="text-align:right;">
+-2.75
 </td>
 </tr>
 <tr>
@@ -522,6 +460,9 @@ x1078714783220797440
 <td style="text-align:left;width: 30em; ">
 and that person perished as well. That criminal should be charged with felony murder for all of their deaths. So why is this case any different? Because a train is involved? Because only police officers were killed? 3/4
 </td>
+<td style="text-align:right;">
+-2.80
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -532,6 +473,9 @@ x1078714782428135424
 </td>
 <td style="text-align:left;width: 30em; ">
 new precedent for criminals – they are no longer accountable for their actions. Imagine a criminal who shot into the air takes 2 police officers on a high-speed car chase. Imagine the pursuing officers crashed their vehicle and perished – or worse yet, they hit a bystander 2/4
+</td>
+<td style="text-align:right;">
+-3.00
 </td>
 </tr>
 <tr>
@@ -544,6 +488,9 @@ x1038861952691462144
 <td style="text-align:left;width: 30em; ">
 “But early Saturday morning, she heard seven or eight gunshots. Her children awoke in terror.” Children waking up in fear of their lives are not how our city thrives. My proven holistic crime strategy will turn the tide against violent crime and create a safer Chicago.
 </td>
+<td style="text-align:right;">
+-2.80
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -554,6 +501,9 @@ x1037351716721704960
 </td>
 <td style="text-align:left;width: 30em; ">
 I am the only candidate who will be able to turn the tide against violent crime in Chicago. Read more about my Crime Plan here: <a href="https://t.co/GuWEuE6qun" class="uri">https://t.co/GuWEuE6qun</a>
+</td>
+<td style="text-align:right;">
+-3.00
 </td>
 </tr>
 <tr>
@@ -566,6 +516,9 @@ x1026237846703824896
 <td style="text-align:left;width: 30em; ">
 It’s unconscionable that Rahm Emanuel is silent when 60 people were shot this weekend alone. This is a catastrophic failure of leadership. Mr. Mayor, even if you don’t have a plan, the least you can do is show some empathy in the face of this crisis. <a href="https://t.co/FjyWan0j9M" class="uri">https://t.co/FjyWan0j9M</a>
 </td>
+<td style="text-align:right;">
+-3.00
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -576,6 +529,9 @@ x1010184414918250496
 </td>
 <td style="text-align:left;width: 30em; ">
 Trump still hasn’t fixed the humanitarian crisis he created. Asylum seekers are not criminals &amp;amp; should be treated fairly under int’l law. We need to unite ALL children w/ their families now! America isn’t great when we re-victimize the most vulnerable. <a href="https://t.co/oQg5CbofI1" class="uri">https://t.co/oQg5CbofI1</a>
+</td>
+<td style="text-align:right;">
+-2.75
 </td>
 </tr>
 <tr>
@@ -588,6 +544,9 @@ x1064705438552416257
 <td style="text-align:left;width: 30em; ">
 Tonight, we lost more people to a senseless shooting, including Officer Samuel Jimenez. During an act of violence, his bravery led him to put his life before that of others. Our hearts are heavy for all lives lost today. Let’s keep them in our prayers.
 </td>
+<td style="text-align:right;">
+-3.00
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -599,6 +558,9 @@ x1088293259368194048
 <td style="text-align:left;width: 30em; ">
 “We have to destroy the machine politics in this city. I’ve been elected for 12 years. There’s a way to destroy the machine, and that’s with People Power. It’s going to take all of us to destroy this corruption. I’ve been standing up against the party for the people 1/2 <a href="https://t.co/GMcl0hns1Y" class="uri">https://t.co/GMcl0hns1Y</a>
 </td>
+<td style="text-align:right;">
+-3.00
+</td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
@@ -609,6 +571,9 @@ x1064915767622344704
 </td>
 <td style="text-align:left;width: 30em; ">
 On Monday she was pronounced dead; killed at the hand of a former romantic partner and a victim of one of the most prevalent and pernicious risks to women in our developed nation. (2/6)
+</td>
+<td style="text-align:right;">
+-2.75
 </td>
 </tr>
 </tbody>

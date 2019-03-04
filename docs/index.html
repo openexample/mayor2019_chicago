@@ -25,7 +25,7 @@
 <meta name="author" content="Pierre Phanor">
 
 
-<meta name="date" content="2019-02-25">
+<meta name="date" content="2019-03-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -185,11 +185,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">Data Visualization and Analysis of Twitter use among the 2019 Chicago Mayoral Election Candidates</h1>
 <p class="author"><em>Pierre Phanor</em></p>
-<p class="date"><em>2019-02-25</em></p>
+<p class="date"><em>2019-03-03</em></p>
 </div>
 <div id="preface" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Preface</h1>
-<p>The 2019 Chicago Mayoral Election is scheduled to take place on February 26. On that day, residents will be making decisions on the people who will lead the city and chart its course in the face of issues such as Crime, Pension Obligations, and Affordable Housing. The goal of this project is to analyze how the candidates communicate to Chicago’s residents through Twitter and, hopefully, gleam some insight into each candidate’s vision for the city.</p>
+<p>The 2019 Chicago Mayoral Election took place on February 26. On that day, residents made decisions selecting the people who will lead the city and chart its course in the face of issues such as Crime, Pension Obligations, and Affordable Housing. The goal of this project is to analyze how the candidates communicate to Chicago’s residents through Twitter and, hopefully, gleam some insight into each candidate’s vision for the city.</p>
 <div id="acknowledgements" class="section level2">
 <h2><span class="header-section-number">1.1</span> Acknowledgements</h2>
 <p>Simply put, I would not have been motivated to do this project without the book <em>Text Mining with R</em>, written by Julia Silge and David Robinson, and their tidytext package. Most of the techniques used in this document are from the book. Text Mining with R serves as a insightful and concise entry into Natural Language Processing.</p>
@@ -211,6 +211,222 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="candidates-covered" class="section level2">
 <h2><span class="header-section-number">1.2</span> Candidates Covered</h2>
 <p>Below is a table of the candidates for Chicago City Mayor as of January 31, 2019. Included with their names are their present or previous positions.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Background
+</th>
+<th style="text-align:left;">
+Username
+</th>
+<th style="text-align:left;">
+Campaign_Start
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Bob Fioretti
+</td>
+<td style="text-align:left;">
+Former Alderman
+</td>
+<td style="text-align:left;">
+BobFiorettiChi
+</td>
+<td style="text-align:left;">
+11/26/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+La Shawn K Ford
+</td>
+<td style="text-align:left;">
+State Representative
+</td>
+<td style="text-align:left;">
+FordForChi19
+</td>
+<td style="text-align:left;">
+10/31/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Susana Mendoza
+</td>
+<td style="text-align:left;">
+Illinois Comptroller
+</td>
+<td style="text-align:left;">
+susanamendoza10
+</td>
+<td style="text-align:left;">
+11/14/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Toni Preckwinkle
+</td>
+<td style="text-align:left;">
+Cook County Board President
+</td>
+<td style="text-align:left;">
+toniforchicago
+</td>
+<td style="text-align:left;">
+9/20/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Gery Chico
+</td>
+<td style="text-align:left;">
+Former Chicago Public Schools President
+</td>
+<td style="text-align:left;">
+GeryChico
+</td>
+<td style="text-align:left;">
+9/20/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Bill Daley
+</td>
+<td style="text-align:left;">
+Former U.S. Commerce Secretary
+</td>
+<td style="text-align:left;">
+DaleyForMayor
+</td>
+<td style="text-align:left;">
+9/17/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Lori Lightfoot
+</td>
+<td style="text-align:left;">
+Former Chicago Police Board President
+</td>
+<td style="text-align:left;">
+LightfootForChi
+</td>
+<td style="text-align:left;">
+5/10/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Garry McCarthy
+</td>
+<td style="text-align:left;">
+Former Chicago Police Superintendent
+</td>
+<td style="text-align:left;">
+Garry4Chicago
+</td>
+<td style="text-align:left;">
+5/21/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Paul Vallas
+</td>
+<td style="text-align:left;">
+Former Chicago Public Schools CED
+</td>
+<td style="text-align:left;">
+Paulvallas
+</td>
+<td style="text-align:left;">
+5/2/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Amara Enyia
+</td>
+<td style="text-align:left;">
+Director of Austin Chamber of Commerce
+</td>
+<td style="text-align:left;">
+amaraforchicago
+</td>
+<td style="text-align:left;">
+8/28/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Jerry Joyce
+</td>
+<td style="text-align:left;">
+Lawyer
+</td>
+<td style="text-align:left;">
+joyce4mayor
+</td>
+<td style="text-align:left;">
+8/29/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+John Kozlar
+</td>
+<td style="text-align:left;">
+Lawyer
+</td>
+<td style="text-align:left;">
+JohnKozlar
+</td>
+<td style="text-align:left;">
+5/8/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Neal Sales-Griffin
+</td>
+<td style="text-align:left;">
+Tech Entrepreneur
+</td>
+<td style="text-align:left;">
+nealsales
+</td>
+<td style="text-align:left;">
+4/21/18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Willie Wilson
+</td>
+<td style="text-align:left;">
+Buisnessman
+</td>
+<td style="text-align:left;">
+DrWillieWilson
+</td>
+<td style="text-align:left;">
+3/27/18
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="code-examples" class="section level2">
 <h2><span class="header-section-number">1.3</span> Code Examples</h2>
@@ -227,7 +443,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="data-acquisition" class="section level2">
 <h2><span class="header-section-number">1.5</span> Data Acquisition</h2>
-<p>The Data were acquired from Twitter through use of the Twitter Developer App and the rtweet package from R. By using the rtweet package, we were able to access the Twitter API and download, potentially, up to the last 3200 tweets from each candidate’s Twitter feed with the get_timeline() function. The collected data were, then, converted to a comma delimited file for portability and easier access. Data for each candidate in the analysis covers the time from their announcement date until the day the data were downloaded, January 31, 2019. More information on Twitter Developer Apps can be found <a href="https://deveolper.twitter.com">here</a>.</p>
+<p>The Data were acquired from Twitter through use of the Twitter Developer App and the rtweet package from R. By using the rtweet package, we were able to access the Twitter API and download, potentially, up to the last 3200 tweets from each candidate’s Twitter feed with the get_timeline() function. The collected data were, then, converted to a comma delimited file for portability and easier access. Data for each candidate in the analysis covers the time from their announcement date until the day the data were downloaded, February 27, 2019. More information on Twitter Developer Apps can be found <a href="https://deveolper.twitter.com">here</a>.</p>
 
 </div>
 </div>

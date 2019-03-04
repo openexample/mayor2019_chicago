@@ -80,7 +80,7 @@ plot(bob_hash)
 ### John Kozlar
 
 John Kozlar's Twitter feed does not have many hashtags, but the hashtag
-network still ties him to being against corruption.
+network still ties him to being against corruption and the candidacy of a certain participant.
 
 ```{r echo=FALSE}
 plot(john_hash)
@@ -106,7 +106,7 @@ plot(ama_hash)
 
 ### Susana Mendoza
 
-So far, the hashtag network of Susana Mendoza is unique among all. She 
+The hashtag network of Susana Mendoza is unique among all. She 
 has seemingly tied the majority of her hashtags to the hashtag chimayor19.
 
 ```{r echo=FALSE}
@@ -187,7 +187,7 @@ plot(gery_hash)
 ### Toni Preckwinkle
 
 In addition to the LGBTQ community and housing, the hastag network of Toni Preckwinkle 
-is singular in its references to the "blue wave" elections of 2018.
+is interesting in its references to the "blue wave" elections of 2018.
 
 ```{r echo=FALSE}
 plot(toni_hash)

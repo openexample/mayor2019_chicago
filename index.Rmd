@@ -14,9 +14,9 @@ description: "Visualizing how the 2019 Chicago Mayoral Candidates used Twitter d
 
 # Preface
 
-The 2019 Chicago Mayoral Election is scheduled to take place on 
-February 26. On that day, residents will be making decisions
-on the people who will lead the city and chart its course in the face of issues 
+The 2019 Chicago Mayoral Election took place on 
+February 26. On that day, residents made decisions selecting 
+the people who will lead the city and chart its course in the face of issues 
 such as Crime, Pension Obligations, and Affordable Housing. The goal
 of this project is to analyze how the candidates communicate to Chicago's
 residents through Twitter and, hopefully, gleam some insight into
@@ -53,7 +53,7 @@ Below is a table of the candidates for Chicago City Mayor as of January
 ```{r include=FALSE}
 dtcand <- data.frame(Candidate=c('Bob Fioretti','La Shawn K Ford','Susana Mendoza','Toni Preckwinkle','Gery Chico','Bill Daley','Lori Lightfoot','Garry McCarthy','Paul Vallas','Amara Enyia','Jerry Joyce','John Kozlar','Neal Sales-Griffin','Willie Wilson'),Background=c('Former Alderman','State Representative','Illinois Comptroller','Cook County Board President','Former Chicago Public Schools President','Former U.S. Commerce Secretary','Former Chicago Police Board President','Former Chicago Police Superintendent','Former Chicago Public Schools CED','Director of Austin Chamber of Commerce','Lawyer','Lawyer','Tech Entrepreneur','Buisnessman'),Username=c('BobFiorettiChi','FordForChi19','susanamendoza10','toniforchicago','GeryChico','DaleyForMayor','LightfootForChi','Garry4Chicago','Paulvallas','amaraforchicago','joyce4mayor','JohnKozlar','nealsales','DrWillieWilson'),Campaign_Start=c('11/26/18','10/31/18','11/14/18','9/20/18','9/20/18','9/17/18','5/10/18','5/21/18','5/2/18','8/28/18','8/29/18','5/8/18','4/21/18','3/27/18'))
 ```
-```{r include = FALSE}
+```{r echo = FALSE}
 kable(dtcand) %>% kable_styling(full_width=T) %>% column_spec(1,bold=T,border_right=T)
 ```
 
@@ -94,6 +94,6 @@ able to access the Twitter API and download, potentially, up to the last
 3200 tweets from each candidate's Twitter feed with the get_timeline() function. 
 The collected data were, then, converted to a comma delimited file for 
 portability and easier access. Data for each candidate in the analysis covers the
-time from their announcement date until the day the data were downloaded, January 31, 2019.
+time from their announcement date until the day the data were downloaded, February 27, 2019.
 More information on Twitter Developer Apps can be found [here](https://deveolper.twitter.com).
 

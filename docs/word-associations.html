@@ -25,7 +25,7 @@
 <meta name="author" content="Pierre Phanor">
 
 
-<meta name="date" content="2019-02-25">
+<meta name="date" content="2019-03-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -184,14 +184,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="word-associations" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Word Associations</h1>
-<p>In this section, we will look at words representing various issues facing The City of Chicago, and the terms used in the campaigns that best correlate with them.</p>
+<p>In this section, we will look at an example of some words representing various issues facing The City of Chicago, and the terms used in the campaigns that best correlate with them.</p>
 <div id="process" class="section level2">
 <h2><span class="header-section-number">5.1</span> Process</h2>
 <p>In the code below, we will take the text from all of the tweets, get rid of stop words, url’s, numbers, hashtags, and other characters not part of the message of the tweet. The names of the candidates are also removed. The remaining text is then parsed out into individual words paired with the tweet they appeared in.</p>
 <p>Using the cast_dtm() function from the tm package, the words and tweets are then cast into a sparse matrix. Finally, depending on the term we use, the correlation between the term and the words in the matrix is calculated. The top results for each term is plotted below.</p>
 <p>The findAssocs() function, also from the tm package, is used to find the best correlation results for terms above a certain threshold. The terms to be examined are the following:</p>
 <ol style="list-style-type: decimal">
-<li>TIFs</li>
+<li>Crime</li>
 <li>Casinos</li>
 <li>Police</li>
 <li>Taxes</li>

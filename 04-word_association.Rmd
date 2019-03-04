@@ -1,6 +1,6 @@
 # Word Associations
 
-In this section, we will look at words representing various issues facing
+In this section, we will look at an example of some words representing various issues facing
 The City of Chicago, and the terms used in the campaigns that best correlate with
 them.
 
@@ -27,7 +27,7 @@ mayor_dtm2 <- mayor_dtm2 %>% cast_dtm(status_id,word,n)
 
 The findAssocs() function, also from the tm package, is used to find the best correlation results for terms above a certain threshold. The terms to be examined are the following:
 
-1. TIFs
+1. Crime
 2. Casinos
 3. Police
 4. Taxes
@@ -35,13 +35,13 @@ The findAssocs() function, also from the tm package, is used to find the best co
 6. Marijuana
 
 ```{r include = FALSE, message = FALSE}
-tifs_assocs <- data.frame(findAssocs(mayor_dtm2,'tifs',.25))
-related_tifs <- tifs_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,tifs),y=tifs))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
-casinos_assocs <- data.frame(findAssocs(mayor_dtm2,'casinos',.5))
+crime_assocs <- data.frame(findAssocs(mayor_dtm2,'crime',.15))
+related_crime <- crime_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,crime),y=crime))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
+casinos_assocs <- data.frame(findAssocs(mayor_dtm2,'casinos',.4))
 related_casinos <- casinos_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,casinos),y=casinos))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
-police_assocs <- data.frame(findAssocs(mayor_dtm2,'police',.19))
+police_assocs <- data.frame(findAssocs(mayor_dtm2,'police',.18))
 related_police <- police_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,police),y=police))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
-taxes_assocs <- data.frame(findAssocs(mayor_dtm2,'taxes',.17))
+taxes_assocs <- data.frame(findAssocs(mayor_dtm2,'taxes',.20))
 related_taxes <- taxes_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,taxes),y=taxes))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
 violence_assocs <- data.frame(findAssocs(mayor_dtm2,'violence',.17))
 related_violence <- violence_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,violence),y=violence))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
@@ -49,7 +49,7 @@ marijuana_assocs <- data.frame(findAssocs(mayor_dtm2,'marijuana',.37))
 related_marijuana <- marijuana_assocs %>% rownames_to_column() %>% ggplot(aes(x=reorder(rowname,marijuana),y=marijuana))+geom_bar(stat='identity',color='black',fill='red')+coord_flip()+xlab('')+theme(axis.text.y = element_text(size=12,face='bold'))
 ```
 ```{r echo=FALSE,fig.width=8}
-grid.arrange(related_tifs,related_casinos,related_police,related_taxes,related_violence,related_marijuana,ncol=3)
+grid.arrange(related_crime,related_casinos,related_police,related_taxes,related_violence,related_marijuana,ncol=3)
 ```
 
 A note about the results: although we are looking for the best correlating terms, some of these correlations may look low. However, when considering the many available words that could appear 
